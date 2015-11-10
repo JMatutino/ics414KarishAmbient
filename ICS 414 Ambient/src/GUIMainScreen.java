@@ -29,7 +29,10 @@ public class GUIMainScreen implements ActionListener {
 	private JComboBox<String> refreshRateBox;
 	private SpringLayout layout;
 	private String[] refreshRate;
-	
+
+    private JLabel outputLabel;
+    private JLabel outputInt;
+
 	
 	public GUIMainScreen() {
 		createAndShowGUI();
@@ -82,6 +85,17 @@ public class GUIMainScreen implements ActionListener {
 		getDataFromURL = new JButton("Get Data");
 		getDataFromURL.addActionListener(this);
 		mainScreen.add(getDataFromURL);
+
+
+        //Output label
+        outputLabel = new JLabel("Output: ");
+        mainScreen.add(outputLabel);
+
+        //Output needs to be between -100 and 100
+        outputInt = new JLabel("Output here");
+        outputInt.setVisible(false);
+        mainScreen.add(outputInt);
+
 		
 		
 		//Layout Constraints for Title
@@ -111,6 +125,14 @@ public class GUIMainScreen implements ActionListener {
 		//Layout Constraints for Button
 		layout.putConstraint(SpringLayout.WEST, getDataFromURL, 110, SpringLayout.WEST, mainScreen);
 		layout.putConstraint(SpringLayout.SOUTH, getDataFromURL, -20, SpringLayout.SOUTH, mainScreen);
+
+        //Output label
+        layout.putConstraint(SpringLayout.WEST, outputLabel, 100, SpringLayout.WEST, mainScreen);
+        layout.putConstraint(SpringLayout.NORTH, outputLabel, 180, SpringLayout.NORTH, mainScreen);
+
+        //Output that shows after button press
+        layout.putConstraint(SpringLayout.WEST, outputInt, 150, SpringLayout.WEST, mainScreen);
+        layout.putConstraint(SpringLayout.NORTH, outputInt, 180, SpringLayout.NORTH, mainScreen);
 		
 		mainScreen.setLayout(layout);
 		
@@ -128,6 +150,8 @@ public class GUIMainScreen implements ActionListener {
 		if(source == getDataFromURL){
 			System.out.println("URL: " + getURLInput.getText());
 			System.out.println("Refresh Rate: " + refreshRateBox.getSelectedItem().toString());
+
+            outputInt.setVisible(true);
 		}
 		
 	}
