@@ -13,20 +13,26 @@ public class ProcessUrl {
         this.url = new URL(urlString);
     }
 
-    public void getContents() throws IOException {
+    public String getContents() throws IOException {
         URLConnection connection = url.openConnection();
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        StringBuilder content = new StringBuilder();
 
         String input;
         while ((input = in.readLine()) != null) {
-            System.out.println(input);
+            //System.out.println(input);
+            content.append(input);
         }
         in.close();
+
+        return content.toString();
     }
 
     public static void main(String[] args) throws Exception {
         ProcessUrl weatherData = new ProcessUrl("http://api.openweathermap.org/data/2.5/weather?q=Honolulu%2Cus&appid=2de143494c0b295cca9337e1e96b00e0");
-        weatherData.getContents();
+        String content = weatherData.getContents();
+
+        System.out.print(content);
     }
 
 }
