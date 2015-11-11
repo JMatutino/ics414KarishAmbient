@@ -8,6 +8,8 @@ import java.net.URLConnection;
 public class ProcessUrl {
     private String urlString;
     private URL url;
+    private String content;
+
     public ProcessUrl(String url) throws MalformedURLException {
         this.urlString = url;
         this.url = new URL(urlString);
@@ -25,14 +27,25 @@ public class ProcessUrl {
         }
         in.close();
 
-        return content.toString();
+
+        this.content = content.toString();
+        return this.content;
+    }
+
+    public int getWeatherId() {
+        int location = content.indexOf("id");
+
+        String weatherId = content.substring(location+4,location+7);
+        return Integer.parseInt(weatherId);
     }
 
     public static void main(String[] args) throws Exception {
         ProcessUrl weatherData = new ProcessUrl("http://api.openweathermap.org/data/2.5/weather?q=Honolulu%2Cus&appid=2de143494c0b295cca9337e1e96b00e0");
         String content = weatherData.getContents();
 
-        System.out.print(content);
+        System.out.println(content);
+
+        System.out.println("Weather ID: " + weatherData.getWeatherId());
     }
 
 }
