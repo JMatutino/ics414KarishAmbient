@@ -1,4 +1,6 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -48,6 +50,13 @@ public class ProcessUrl {
         return Integer.parseInt(weatherId);
     }
 
+    public String getWeatherIcon() {
+        int location = content.indexOf("icon");
+
+        String weatherIcon = content.substring(location+7,location+10);
+        return weatherIcon;
+    }
+
     public static void main(String[] args) throws Exception {
         System.out.println("This is a test:");
         ProcessUrl weatherData = new ProcessUrl("http://api.openweathermap.org/data/2.5/weather?q=Honolulu%2Cus&appid=2de143494c0b295cca9337e1e96b00e0");
@@ -67,8 +76,18 @@ public class ProcessUrl {
                 choices[0]);
 
         ProcessUrl usrWeatherData = new ProcessUrl(usrUrl);
+
+        URL url = new URL("http://openweathermap.org/img/w/"+usrWeatherData.getWeatherIcon()+".png");
+        BufferedImage img = ImageIO.read(url);
+        ImageIcon weatherIcon = new ImageIcon(img);
+
         String output = "Weather ID: " + usrWeatherData.getWeatherId();
-        JOptionPane.showMessageDialog(null,output);
+
+        JOptionPane.showMessageDialog(null,
+                output,
+                "Output",
+                JOptionPane.INFORMATION_MESSAGE,
+                weatherIcon);
     }
 
 }
