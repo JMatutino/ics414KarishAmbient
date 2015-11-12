@@ -57,10 +57,17 @@ public class ProcessUrl {
 
         String usrUrl = JOptionPane.showInputDialog("Url for data");
         System.out.println("User input: " + usrUrl);
-        String freq = JOptionPane.showInputDialog("Frequency");
+        String[] choices = {"1", "3", "5", "10", "15", "30", "60"};
+        String freq = (String) JOptionPane.showInputDialog(null,
+                "Frequency: ",
+                "Choose frequency (Minutes): ",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                choices,
+                choices[0]);
 
         ProcessUrl usrWeatherData = new ProcessUrl(usrUrl);
-        String output = "Output from your URL: " + usrWeatherData.getWeatherId();
+        String output = "Weather ID: " + usrWeatherData.getWeatherId();
         JOptionPane.showMessageDialog(null,output);
     }
 
