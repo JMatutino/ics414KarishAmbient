@@ -59,8 +59,8 @@ public class ProcessUrl {
         System.out.println("User input: " + usrUrl);
         String[] choices = {"1", "3", "5", "10", "15", "30", "60"};
         String freq = (String) JOptionPane.showInputDialog(null,
-                "Frequency: ",
-                "Choose frequency (Minutes): ",
+                "Frequency (Minutes): ",
+                "Choose frequency ",
                 JOptionPane.QUESTION_MESSAGE,
                 null,
                 choices,
