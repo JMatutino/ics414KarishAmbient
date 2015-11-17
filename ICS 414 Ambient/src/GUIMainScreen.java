@@ -11,16 +11,22 @@
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.net.URL;
+
 import javax.swing.SpringLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import java.awt.Container;
 
-public class GUIMainScreen implements ActionListener {
+public class GUIMainScreen implements ActionListener{
 	
 	private JLabel title, getURLLabel, getRefreshRate, refreshLabel;
 	private JPanel mainScreen;
@@ -29,12 +35,13 @@ public class GUIMainScreen implements ActionListener {
 	private JComboBox<String> refreshRateBox;
 	private SpringLayout layout;
 	private String[] refreshRate;
-
     private JLabel outputLabel;
     private JLabel outputInt;
+    private ProcessUrl processData;
 
 	
-	public GUIMainScreen() {
+	public GUIMainScreen() throws Exception {
+		//ProcessUrl process = new ProcessUrl(null);
 		createAndShowGUI();
 		
 	}
@@ -70,11 +77,12 @@ public class GUIMainScreen implements ActionListener {
 		mainScreen.add(getRefreshRate);
 		
 		//JComboBox to avoid bad input
-		refreshRate = new String[100];
-		for(int i = 1; i < 100 ;i++) {
-			refreshRate[i] = String.valueOf(i);
+		refreshRate = new String[101];
+		for(int i = 1; i < 101 ;i++) {
+			refreshRate[i-1] = String.valueOf(i);
 		}
 		refreshRateBox = new JComboBox<String>(refreshRate);
+		refreshRateBox.setSelectedIndex(0);
 		mainScreen.add(refreshRateBox);
 		
 		//Label for Minutes
@@ -148,15 +156,26 @@ public class GUIMainScreen implements ActionListener {
 		Object source = ae.getSource();
 		
 		if(source == getDataFromURL){
-			System.out.println("URL: " + getURLInput.getText());
-			System.out.println("Refresh Rate: " + refreshRateBox.getSelectedItem().toString());
+			try {
+				processData = new ProcessUrl(getURLInput.getText());
 
+		        URL url = new URL("http://openweathermap.org/img/w/"+ processData.getWeatherIcon()+".png");
+		        BufferedImage img = ImageIO.read(url);
+		        ImageIcon weatherIcon = new ImageIcon(img);
+
+		        String output = "Weather ID: " + processData.getWeatherId();
+
+			} catch(Exception e) {
+				e.printStackTrace(System.out);
+			}
+			
+			
             outputInt.setVisible(true);
 		}
 		
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		JFrame window = new JFrame("Event Lights");
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setPreferredSize(new Dimension(300,500));
