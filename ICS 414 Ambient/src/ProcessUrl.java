@@ -50,11 +50,14 @@ public class ProcessUrl {
         return Integer.parseInt(weatherId);
     }
 
-    public String getWeatherIcon() {
+    public ImageIcon getWeatherIcon() throws IOException {
         int location = content.indexOf("icon");
 
         String weatherIcon = content.substring(location+7,location+10);
-        return weatherIcon;
+
+        URL url = new URL("http://openweathermap.org/img/w/"+ weatherIcon +".png");
+        BufferedImage img = ImageIO.read(url);
+        return new ImageIcon(img);
     }
 
     public static void main(String[] args) throws Exception {
@@ -77,17 +80,13 @@ public class ProcessUrl {
 
         ProcessUrl usrWeatherData = new ProcessUrl(usrUrl);
 
-        URL url = new URL("http://openweathermap.org/img/w/"+usrWeatherData.getWeatherIcon()+".png");
-        BufferedImage img = ImageIO.read(url);
-        ImageIcon weatherIcon = new ImageIcon(img);
-
         String output = "Weather ID: " + usrWeatherData.getWeatherId();
 
         JOptionPane.showMessageDialog(null,
                 output,
                 "Output",
                 JOptionPane.INFORMATION_MESSAGE,
-                weatherIcon);
+                usrWeatherData.getWeatherIcon());
     }
 
 }
