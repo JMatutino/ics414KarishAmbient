@@ -14,6 +14,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class ProcessUrl {
     private String urlString;
     private URL url;
@@ -81,20 +84,14 @@ public class ProcessUrl {
         frame.setVisible(true);
         frame.pack();
         
-        javax.swing.Timer timer = new Timer(1000, new ActionListener(){
-        	int counter = 0;
-        	@Override
-        	public void actionPerformed(ActionEvent ae){
-        		if(counter > 5) {
-        			((Timer) ae.getSource()).stop();
-        			frame.dispose();
-        		} else {
-        			counter++;
-        		}
+        
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask(){
+        	public void run() {
+        		frame.dispose();
         	}
-
-        });
-        timer.start();
+        }, 5000); //Shows the icon on the screen for 5 seconds
+        
     }
 
     public static void main(String[] args) throws Exception {
@@ -125,28 +122,20 @@ public class ProcessUrl {
                 "Output",
                 JOptionPane.INFORMATION_MESSAGE,
                 usrWeatherData.getWeatherIcon());
+       
+        int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
+        refreshInMinutes *= Integer.parseInt(freq);
         
-        usrWeatherData.showWeatherIcon();
-        
-        javax.swing.Timer refreshTimer = null;
-        refreshTimer = new Timer(1000, new ActionListener(){
-        	int refreshCounter = 0;
-        	@Override
-        	public void actionPerformed(ActionEvent ae) {
-        		if(refreshCounter > 10) {
-        			((Timer) ae.getSource()).stop();
-        			try{
-        				usrWeatherData.showWeatherIcon();
-        			}catch(IOException e){
-        				e.printStackTrace();
-        			}
-        		} else {
-        			refreshCounter++;
+        Timer refreshTimer = new Timer();
+        refreshTimer.scheduleAtFixedRate(new TimerTask(){
+        	public void run() {
+        		try{
+        			usrWeatherData.showWeatherIcon();
+        		} catch (IOException e){
+        			e.printStackTrace();
         		}
         	}
-        });
-        
-        refreshTimer.start();
+        }, 0, refreshInMinutes);
         
     }
     
