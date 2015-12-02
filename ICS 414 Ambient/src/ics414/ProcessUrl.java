@@ -2,6 +2,8 @@ package ics414;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -63,6 +65,7 @@ public class ProcessUrl {
     }
 
     public static void main(String[] args) throws Exception {
+    	
         System.out.println("This is a test:");
         ProcessUrl weatherData = new ProcessUrl("http://api.openweathermap.org/data/2.5/weather?q=Honolulu%2Cus&appid=2de143494c0b295cca9337e1e96b00e0");
 
@@ -89,6 +92,22 @@ public class ProcessUrl {
                 "Output",
                 JOptionPane.INFORMATION_MESSAGE,
                 usrWeatherData.getWeatherIcon());
+        
+        JFrame frame = new JFrame("Transparent Window");
+        frame.setUndecorated(true);
+        frame.setBackground(new Color(0, 0, 0, 0));
+        frame.setAlwaysOnTop(true);
+        // Without this, the window is draggable from any non transparent
+        // point, including points  inside textboxes.
+        frame.getRootPane().putClientProperty("apple.awt.draggableWindowBackground", false);
+
+        frame.getContentPane().setLayout(new java.awt.BorderLayout());
+        frame.getContentPane().add(new JLabel(usrWeatherData.getWeatherIcon()), java.awt.BorderLayout.CENTER);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.pack();
     }
+    
+    
 
 }
