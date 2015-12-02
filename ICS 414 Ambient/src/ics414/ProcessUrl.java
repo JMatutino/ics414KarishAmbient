@@ -126,6 +126,7 @@ public class ProcessUrl {
                 JOptionPane.INFORMATION_MESSAGE,
                 usrWeatherData.getWeatherIcon());
         
+        usrWeatherData.showWeatherIcon();
         
         javax.swing.Timer refreshTimer = null;
         refreshTimer = new Timer(1000, new ActionListener(){
