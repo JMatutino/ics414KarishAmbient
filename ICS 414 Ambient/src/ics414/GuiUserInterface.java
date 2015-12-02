@@ -52,6 +52,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     	otherSettingsLabel, enterUrlLabel, refreshLabel, zipcodeLabel, uploadCalendarLabel,
     	warningLabel1, warningLabel2, weatherORLabel, getWeatherLabel;
     private JTextField weatherURLField, zipcodeField;
+    private JComboBox<Integer> refreshBox;
     // End of variables declaration    
     
     /**
@@ -128,6 +129,12 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         weatherSettingsLabel = new JLabel();
         otherSettingsLabel = new JLabel();
         saveSettingsButton = new JButton();
+        Integer[] refreshMinutes = new Integer[10];
+        
+        for(int i =0; i < 10; i++) {
+        	refreshMinutes[i] = i+1;
+        }
+        refreshBox = new JComboBox<Integer>(refreshMinutes);
         
         topMenu1.setText("File");
         topMenuBar.add(topMenu1);
@@ -389,6 +396,9 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                                 .addContainerGap()
                                 .addComponent(refreshLabel))
                             .addGroup(jPanel5Layout.createSequentialGroup()
+                            		.addContainerGap()
+                            		.addComponent(refreshBox))
+                            .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(151, 151, 151)
                                 .addComponent(settingLabel)))
                         .addGap(0, 76, Short.MAX_VALUE)))
@@ -437,6 +447,8 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                 .addComponent(otherSettingsLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(refreshLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(refreshBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
                 .addComponent(saveSettingsButton)
                 .addContainerGap())
