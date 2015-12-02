@@ -65,6 +65,37 @@ public class ProcessUrl {
         BufferedImage img = ImageIO.read(url);
         return new ImageIcon(img);
     }
+    
+    public void showWeatherIcon() throws IOException {
+    	JFrame frame = new JFrame("Transparent Window");
+        frame.setUndecorated(true);
+        frame.setBackground(new Color(0, 0, 0, 0));
+        frame.setAlwaysOnTop(true);
+        // Without this, the window is draggable from any non transparent
+        // point, including points  inside textboxes.
+        frame.getRootPane().putClientProperty("apple.awt.draggableWindowBackground", false);
+
+        frame.getContentPane().setLayout(new java.awt.BorderLayout());
+        frame.getContentPane().add(new JLabel(getWeatherIcon()), java.awt.BorderLayout.CENTER);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+        frame.pack();
+        
+        javax.swing.Timer timer = new Timer(1000, new ActionListener(){
+        	int counter = 0;
+        	@Override
+        	public void actionPerformed(ActionEvent ae){
+        		if(counter > 5) {
+        			((Timer) ae.getSource()).stop();
+        			frame.dispose();
+        		} else {
+        			counter++;
+        		}
+        	}
+
+        });
+        timer.start();
+    }
 
     public static void main(String[] args) throws Exception {
     	
@@ -95,35 +126,26 @@ public class ProcessUrl {
                 JOptionPane.INFORMATION_MESSAGE,
                 usrWeatherData.getWeatherIcon());
         
-        JFrame frame = new JFrame("Transparent Window");
-        frame.setUndecorated(true);
-        frame.setBackground(new Color(0, 0, 0, 0));
-        frame.setAlwaysOnTop(true);
-        // Without this, the window is draggable from any non transparent
-        // point, including points  inside textboxes.
-        frame.getRootPane().putClientProperty("apple.awt.draggableWindowBackground", false);
-
-        frame.getContentPane().setLayout(new java.awt.BorderLayout());
-        frame.getContentPane().add(new JLabel(usrWeatherData.getWeatherIcon()), java.awt.BorderLayout.CENTER);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-        frame.pack();
         
-        javax.swing.Timer timer = new Timer(1000, new ActionListener(){
-        	int counter = 0;
+        javax.swing.Timer refreshTimer = null;
+        refreshTimer = new Timer(1000, new ActionListener(){
+        	int refreshCounter = 0;
         	@Override
-        	public void actionPerformed(ActionEvent ae){
-        		if(counter > 5) {
+        	public void actionPerformed(ActionEvent ae) {
+        		if(refreshCounter > 10) {
         			((Timer) ae.getSource()).stop();
-        			frame.dispose();
+        			try{
+        				usrWeatherData.showWeatherIcon();
+        			}catch(IOException e){
+        				e.printStackTrace();
+        			}
         		} else {
-        			counter++;
+        			refreshCounter++;
         		}
         	}
-
         });
         
-        timer.start();
+        refreshTimer.start();
         
     }
     
