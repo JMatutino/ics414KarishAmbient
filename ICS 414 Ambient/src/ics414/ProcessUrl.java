@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -106,6 +108,23 @@ public class ProcessUrl {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.pack();
+        
+        javax.swing.Timer timer = new Timer(1000, new ActionListener(){
+        	int counter = 0;
+        	@Override
+        	public void actionPerformed(ActionEvent ae){
+        		if(counter > 5) {
+        			((Timer) ae.getSource()).stop();
+        			frame.dispose();
+        		} else {
+        			counter++;
+        		}
+        	}
+
+        });
+        
+        timer.start();
+        
     }
     
     
