@@ -353,7 +353,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         
         //Other Settings
         otherSettingsLabel.setText("Other Settings");
-        refreshLabel.setText("Change Refresh Rate");
+        refreshLabel.setText("Change Refresh Rate (Minutes)");
         saveSettingsButton.setText("Save Settings");
         saveSettingsButton.addActionListener(this);
 
