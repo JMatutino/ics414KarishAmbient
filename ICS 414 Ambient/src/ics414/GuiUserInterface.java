@@ -49,9 +49,9 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     private JSeparator settingSeparator1, settingSeparator2;
     private JButton weatherDataButton, uploadCalendarButton, saveSettingsButton;
     private JLabel settingLabel, calendarSettingsLabel, weatherSettingsLabel,
-    	otherSettingsLabel, enterUrlLabel, refreshLabel, zipcodeLabel, uploadCalendarLabel,
+    	otherSettingsLabel, enterUrlLabel, refreshLabel, uploadCalendarLabel,
     	warningLabel1, warningLabel2, weatherORLabel, getWeatherLabel;
-    private JTextField weatherURLField, zipcodeField;
+    private JTextField weatherURLField;
     private JComboBox<Integer> refreshBox;
     // End of variables declaration    
     
@@ -115,13 +115,13 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         refreshLabel = new JLabel();
         weatherURLField = new JTextField();
         weatherDataButton = new JButton();
-        zipcodeLabel = new JLabel();
+        //zipcodeLabel = new JLabel();
         uploadCalendarLabel = new JLabel();
         uploadCalendarButton = new JButton();
         warningLabel1 = new JLabel();
         warningLabel2 = new JLabel();
         weatherORLabel = new JLabel();
-        zipcodeField = new JTextField();
+        //zipcodeField = new JTextField();
         getWeatherLabel = new JLabel();
         settingSeparator1 = new JSeparator();
         settingSeparator2 = new JSeparator();
@@ -327,8 +327,6 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         weatherSettingsLabel.setText("Weather Settings");
         enterUrlLabel.setText("Enter URL for Weather");
         //weatherURLField.setText("weatherURLField");
-        weatherORLabel.setText("OR");
-        zipcodeLabel.setText("Enter Zip Code:");
         //zipcodeField.setText("zipcodeField");
         getWeatherLabel.setText("Get Weather Data: ");
         weatherDataButton.setText("Get Weather");
@@ -370,7 +368,6 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(weatherORLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addContainerGap()
@@ -379,7 +376,6 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                                     .addGroup(jPanel5Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(zipcodeLabel)
                                             .addComponent(enterUrlLabel)
                                             .addGroup(jPanel5Layout.createSequentialGroup()
                                                 .addComponent(getWeatherLabel)
@@ -422,10 +418,6 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(weatherORLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(zipcodeLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(getWeatherLabel)
                     .addComponent(weatherDataButton))
