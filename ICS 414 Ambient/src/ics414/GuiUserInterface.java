@@ -586,6 +586,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 				System.out.println(weatherURLField.getText());
 				try{
 					usrWeatherData = new ProcessUrl(weatherURLField.getText());
+            String weatherUrl = weatherURLField.getText();
 					
 					//Start the refreshing of ambient part of the User Interface
 					int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
@@ -597,9 +598,11 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 			        refreshTimer.scheduleAtFixedRate(new TimerTask(){
 			        	public void run() {
 			        		try{
+                      usrWeatherData = new ProcessUrl(weatherUrl);
 			        			usrWeatherData.showWeatherIcon();
-			        		} catch (IOException e){
+			        		} catch (Exception e){
 			        			e.printStackTrace();
+                      System.err.println("Error with Timer");
 			        		}
 			        	}
 			        }, 0, refreshInMinutes);
