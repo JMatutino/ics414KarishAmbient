@@ -11,11 +11,13 @@ package ics414;
  */
 
 import javax.swing.*;
+import javax.swing.text.DefaultEditorKit;
 import javax.swing.tree.ExpandVetoException;
 import java.awt.TextArea;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 
 
@@ -53,6 +55,8 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     	warningLabel1, warningLabel2, weatherORLabel, getWeatherLabel;
     private JTextField weatherURLField;
     private JComboBox<Integer> refreshBox;
+    
+    private JMenuItem menuItem;
     // End of variables declaration    
     
     /**
@@ -135,6 +139,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         	refreshMinutes[i] = i+1;
         }
         refreshBox = new JComboBox<Integer>(refreshMinutes);
+        
         
         topMenu1.setText("File");
         topMenuBar.add(topMenu1);
@@ -327,6 +332,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         weatherSettingsLabel.setText("Weather Settings");
         enterUrlLabel.setText("Enter URL for Weather");
         //weatherURLField.setText("weatherURLField");
+        weatherURLField.setEditable(true);
         //zipcodeField.setText("zipcodeField");
         getWeatherLabel.setText("Get Weather Data: ");
         weatherDataButton.setText("Get Weather");
@@ -469,6 +475,17 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         topMenuBar.add(topMenu1);
 
         topMenu2.setText("Edit");
+        
+        menuItem = new JMenuItem(new DefaultEditorKit.CopyAction());
+        menuItem.setText("Copy");
+        menuItem.setMnemonic(KeyEvent.VK_C);
+        topMenu2.add(menuItem);
+        
+        menuItem = new JMenuItem(new DefaultEditorKit.PasteAction());
+        menuItem.setText("Paste");
+        menuItem.setMnemonic(KeyEvent.VK_P);
+        topMenu2.add(menuItem);
+        
         topMenuBar.add(topMenu2);
 
         setJMenuBar(topMenuBar);

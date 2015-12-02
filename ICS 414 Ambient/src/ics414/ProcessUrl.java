@@ -97,7 +97,7 @@ public class ProcessUrl {
     public static void main(String[] args) throws Exception {
     	
         System.out.println("This is a test:");
-        ProcessUrl weatherData = new ProcessUrl("http://api.openweathermap.org/data/2.5/weather?q=Honolulu%2Cus&appid=2de143494c0b295cca9337e1e96b00e0");
+        ProcessUrl weatherData = new ProcessUrl("http://api.openweathermap.org/data/2.5/weather?q=Kahuku%2Cus&appid=2de143494c0b295cca9337e1e96b00e0");
 
         System.out.println("Weather ID: " + weatherData.getWeatherId());
         System.out.println("Starting GUI");
