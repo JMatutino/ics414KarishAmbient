@@ -19,6 +19,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class GuiUserInterface extends javax.swing.JFrame implements ActionListener {
@@ -57,6 +59,9 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     private JComboBox<Integer> refreshBox;
     
     private JMenuItem menuItem;
+    
+    
+    private ProcessUrl usrWeatherData;
     // End of variables declaration    
     
     /**
@@ -207,7 +212,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(upcomingEventArea, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(generalTabLayout.createSequentialGroup()
-                        .addGap(0, 389, Short.MAX_VALUE)
+                        .addGap(290, 389, Short.MAX_VALUE)
                         .addGroup(generalTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(createEventLabel)
                             .addComponent(createEventButton))))
@@ -508,10 +513,10 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         );
         
         
-        getContentPane().setPreferredSize(new Dimension(300,554));
+        getContentPane().setPreferredSize(new Dimension(350,554));
 
         //Process URL when press "Get Weather" button
-        weatherDataButton.addActionListener(new ActionListener() {
+        /*weatherDataButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
@@ -531,7 +536,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                             JOptionPane.ERROR_MESSAGE);
                 }
             }
-        });
+        });*/
         
         pack();
     }// </editor-fold>
@@ -546,7 +551,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
+        /*try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -561,7 +566,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
             java.util.logging.Logger.getLogger(GuiUserInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(GuiUserInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
+        }*/
         //</editor-fold>
 
         /* Create and display the form */
@@ -579,6 +584,28 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 		if (source == weatherDataButton) {
 			if (!(weatherURLField.getText().equals(""))) {
 				System.out.println(weatherURLField.getText());
+				try{
+					usrWeatherData = new ProcessUrl(weatherURLField.getText());
+					
+					//Start the refreshing of ambient part of the User Interface
+					int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
+					
+					System.out.println(refreshBox.getSelectedItem().toString());
+			        refreshInMinutes *= Integer.parseInt(refreshBox.getSelectedItem().toString());
+			        
+			        Timer refreshTimer = new Timer();
+			        refreshTimer.scheduleAtFixedRate(new TimerTask(){
+			        	public void run() {
+			        		try{
+			        			usrWeatherData.showWeatherIcon();
+			        		} catch (IOException e){
+			        			e.printStackTrace();
+			        		}
+			        	}
+			        }, 0, refreshInMinutes);
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
 		}
 		
