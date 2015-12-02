@@ -10,19 +10,13 @@ package ics414;
  * @author kevintone
  */
 
-import javax.swing.JMenuBar;
+import javax.swing.*;
+import javax.swing.tree.ExpandVetoException;
 import java.awt.TextArea;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JSeparator;
-import javax.swing.JMenu;
-import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
-
+import java.io.IOException;
 
 
 public class GuiUserInterface extends javax.swing.JFrame implements ActionListener {
@@ -494,9 +488,33 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         
         
         getContentPane().setPreferredSize(new Dimension(300,554));
+
+        //Process URL when press "Get Weather" button
+        weatherDataButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                ProcessUrl usrWeatherData = null;
+                try {
+                    usrWeatherData = new ProcessUrl(weatherURLField.getText());
+                    JOptionPane.showMessageDialog(null,
+                            usrWeatherData.getWeatherId(),
+                            "Notification",
+                            JOptionPane.INFORMATION_MESSAGE,
+                            usrWeatherData.getWeatherIcon());
+                } catch (Exception exception) {
+                    System.err.println("Problem processing weather url");
+                    JOptionPane.showMessageDialog(null,
+                            "Problem processing Weather URL",
+                            "alert",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
         
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>
+
 
     /**
      * @param args the command line arguments
