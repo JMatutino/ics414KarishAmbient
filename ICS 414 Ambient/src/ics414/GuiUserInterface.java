@@ -603,11 +603,19 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 			        		} catch (Exception e){
 			        			e.printStackTrace();
                       System.err.println("Error with Timer");
+                      JOptionPane.showMessageDialog(null,
+                          "Error with refresh timer",
+                          "alert",
+                          JOptionPane.ERROR_MESSAGE);
 			        		}
 			        	}
 			        }, 0, refreshInMinutes);
 				} catch(Exception e) {
 					e.printStackTrace();
+            JOptionPane.showMessageDialog(null,
+                "Problem processing Weather URL",
+                "alert",
+                JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}
