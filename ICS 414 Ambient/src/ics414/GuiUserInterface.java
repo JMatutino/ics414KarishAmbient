@@ -45,6 +45,12 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     private JButton deleteEventButton;
     private TextArea upcomingEventArea;
     
+    //Set Colors Pane
+    private JLabel setColorsLabel, colorWeatherLabel, colorCalendarLabel;
+    private JButton jButton7, jButton8, jButton9, jButton10, jButton11, jButton12,
+    	jButton13, jButton14;
+    private JSeparator setColorSeparator1;
+    
     // Settings Pane
     private JSeparator settingSeparator1, settingSeparator2;
     private JButton weatherDataButton, uploadCalendarButton, saveSettingsButton;
@@ -94,6 +100,20 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         editEventLabel = new JLabel();
         deleteEventLabel = new JLabel();
         
+        //Initializing Set Colors Pane
+        setColorsLabel = new JLabel();
+        colorWeatherLabel = new JLabel();
+        colorCalendarLabel = new JLabel();
+        jButton7 = new JButton();
+        jButton8 = new JButton();
+        jButton9 = new JButton();
+        jButton10 = new JButton();
+        jButton11 = new JButton();
+        jButton12 = new JButton();
+        jButton13 = new JButton();
+        jButton14 = new JButton();
+        setColorSeparator1 = new JSeparator();
+        
         //Initializing Settings buttons/Labels
         settingLabel = new JLabel();
         enterUrlLabel = new JLabel();
@@ -127,13 +147,19 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         //General Tab
         generalLabel.setText("General");
         upcomingEventLabel.setText("Upcoming Events: ");
-        createEventButton.setText("Create Event");
-        editEventButton.setText("Edit Event");
-        deleteEventButton.setText("Delete Event");
         createEventLabel.setText("Create");
         editEventLabel.setText("Edit");
         deleteEventLabel.setText("Delete");
-
+        
+        createEventButton.setText("Create Event");
+        createEventButton.addActionListener(this);
+        editEventButton.setText("Edit Event");
+        editEventButton.addActionListener(this);
+        deleteEventButton.setText("Delete Event");
+        deleteEventButton.addActionListener(this);
+        
+        upcomingEventArea.setEditable(false);
+        
         javax.swing.GroupLayout generalTabLayout = new javax.swing.GroupLayout(generalTab);
         generalTab.setLayout(generalTabLayout);
         generalTabLayout.setHorizontalGroup(
@@ -209,30 +235,103 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         
         
         //Setting Colors Tab
+        setColorsLabel.setText("Set Colors");
+        colorWeatherLabel.setText("Weather Events");
+        colorCalendarLabel.setText("Calendar Events");
+        jButton7.setText("jButton7");
+        jButton8.setText("jButton8");
+        jButton9.setText("jButton9");
+        jButton10.setText("jButton10");
+        jButton11.setText("jButton11");
+        jButton12.setText("jButton12");
+        jButton13.setText("jButton13");
+        jButton14.setText("jButton14");
+
         javax.swing.GroupLayout setColorsTabLayout = new javax.swing.GroupLayout(setColorsTab);
         setColorsTab.setLayout(setColorsTabLayout);
         setColorsTabLayout.setHorizontalGroup(
             setColorsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 281, Short.MAX_VALUE)
+            .addGroup(setColorsTabLayout.createSequentialGroup()
+                .addGroup(setColorsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(setColorsTabLayout.createSequentialGroup()
+                        .addGroup(setColorsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(setColorsTabLayout.createSequentialGroup()
+                                .addGap(109, 109, 109)
+                                .addComponent(setColorsLabel))
+                            .addGroup(setColorsTabLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(setColorsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(colorWeatherLabel)
+                                    .addGroup(setColorsTabLayout.createSequentialGroup()
+                                        .addGroup(setColorsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(setColorsTabLayout.createSequentialGroup()
+                                                .addGap(6, 6, 6)
+                                                .addGroup(setColorsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                    .addComponent(jButton7)
+                                                    .addComponent(jButton8)
+                                                    .addComponent(jButton9)))
+                                            .addComponent(jButton10))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(setColorsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jButton12)
+                                            .addComponent(jButton11)
+                                            .addComponent(jButton13)))))
+                            .addGroup(setColorsTabLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(setColorsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(setColorsTabLayout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addComponent(jButton14))
+                                    .addComponent(colorCalendarLabel))))
+                        .addGap(0, 47, Short.MAX_VALUE))
+                    .addComponent(setColorSeparator1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         setColorsTabLayout.setVerticalGroup(
             setColorsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 440, Short.MAX_VALUE)
+            .addGroup(setColorsTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(setColorsLabel)
+                .addGap(18, 18, 18)
+                .addComponent(colorWeatherLabel)
+                .addGroup(setColorsTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(setColorsTabLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton10))
+                    .addGroup(setColorsTabLayout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton13)))
+                .addGap(63, 63, 63)
+                .addComponent(setColorSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(colorCalendarLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton14)
+                .addContainerGap(243, Short.MAX_VALUE))
         );
 
         tabbedPane.addTab("Set Colors", setColorsTab);
-
-        settingLabel.setText("Settings");
         
         //Weather Settings
         weatherSettingsLabel.setText("Weather Settings");
         enterUrlLabel.setText("Enter URL for Weather");
-        weatherURLField.setText("weatherURLField");
+        //weatherURLField.setText("weatherURLField");
         weatherORLabel.setText("OR");
         zipcodeLabel.setText("Enter Zip Code:");
-        zipcodeField.setText("zipcodeField");
+        //zipcodeField.setText("zipcodeField");
         getWeatherLabel.setText("Get Weather Data: ");
         weatherDataButton.setText("Get Weather");
+        weatherDataButton.addActionListener(this);
         
         //Calendar Settings
         calendarSettingsLabel.setText("Calendar Settings");
@@ -240,11 +339,13 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         warningLabel2.setText("   account to get Calendar info ***");
         uploadCalendarLabel.setText("Upload a Google Calendar:");
         uploadCalendarButton.setText("Upload");
+        uploadCalendarButton.addActionListener(this);
         
         //Other Settings
         otherSettingsLabel.setText("Other Settings");
         refreshLabel.setText("Change Refresh Rate");
         saveSettingsButton.setText("Save Settings");
+        saveSettingsButton.addActionListener(this);
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(settingTab);
         settingTab.setLayout(jPanel5Layout);
@@ -299,7 +400,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                         .addGap(0, 76, Short.MAX_VALUE)))
                 .addContainerGap())
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(118, 118, 118)
+                .addGap(90, 90, 90)
                 .addComponent(saveSettingsButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -436,6 +537,11 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		
+		if (source == weatherDataButton) {
+			if (!(weatherURLField.getText().equals(""))) {
+				System.out.println(weatherURLField.getText());
+			}
+		}
 		
 	}
 
