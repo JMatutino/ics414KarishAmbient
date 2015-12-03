@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -58,12 +60,27 @@ public class ProcessUrl {
         String weatherId = content.substring(location+4,location+7);
         return Integer.parseInt(weatherId);
     }
+    
+    public String getWeatherTemperature() {
+    	int location = content.indexOf("temp");
+    	String weatherTemperature = content.substring(location+6, location+12);
+    	
+    	return weatherTemperature;
+    }
+    
+    public String getWeatherHumidity() {
+    	int location = content.indexOf("humidity");
+    	String weatherHumidity = content.substring(location+10, location+12);
+    	
+    	return weatherHumidity;
+    }
 
     public ImageIcon getWeatherIcon() throws IOException {
         int location = content.indexOf("icon");
 
         String weatherIcon = content.substring(location+7,location+10);
-
+        
+        //System.out.println(weatherIcon);
         URL url = new URL("http://openweathermap.org/img/w/"+ weatherIcon +".png");
         BufferedImage img = ImageIO.read(url);
         return new ImageIcon(img);
@@ -80,6 +97,7 @@ public class ProcessUrl {
         frame.getRootPane().putClientProperty("apple.awt.draggableWindowBackground", false);
 
         frame.getContentPane().setLayout(new java.awt.BorderLayout());
+        //ImageIcon toUse = increaseImageSize(getWeatherIcon());
         frame.getContentPane().add(new JLabel(getWeatherIcon()), java.awt.BorderLayout.CENTER);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -93,6 +111,13 @@ public class ProcessUrl {
         	}
         }, 5000); //Shows the icon on the screen for 5 seconds
         
+    }
+    
+    public ImageIcon increaseImageSize(ImageIcon image){
+    	Image img = image.getImage();
+    	Image scaleImage = img.getScaledInstance(250, 300, java.awt.Image.SCALE_SMOOTH);
+    	ImageIcon resizedImage = new ImageIcon(scaleImage);
+    	return resizedImage;
     }
 
     /*public static void main(String[] args) throws Exception {

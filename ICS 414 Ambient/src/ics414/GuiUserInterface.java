@@ -29,6 +29,9 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 	private String startURL = "http://api.openweathermap.org/data/2.5/weather?";
 	private String endURL = "&appid=2de143494c0b295cca9337e1e96b00e0";
 	private String locWeatherURL = new String();
+	private String location = new String();
+	private String humidity = new String();
+	private Double temperature = null;
 	
 	//Menu Bar at the top
 	private JMenuBar topMenuBar;
@@ -46,6 +49,13 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     private JButton editEventButton;
     private JButton deleteEventButton;
     private TextArea upcomingEventArea;
+    
+    //Forecast Pane
+    private JLabel forecastLabel, currentWeatherLabel, weatherImage, humidityLabel,
+    	temperatureLabel;
+    private JLabel humidityValue, temperatureValue;
+    private boolean hasWeatherForCity = false;
+    
     
     // Settings Pane
     private JSeparator settingSeparator1, settingSeparator2;
@@ -68,7 +78,15 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     public GuiUserInterface() {
         initComponents();
     }
-
+    
+    private double toFarenheit(String fromKelvin) {
+    	double answer = Double.parseDouble(fromKelvin);
+    	answer -= 273.15;
+    	answer *= 1.8;
+    	answer += 32;
+    	
+    	return answer;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -100,6 +118,14 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         createEventLabel = new JLabel();
         editEventLabel = new JLabel();
         deleteEventLabel = new JLabel();
+        
+        //Forecast Labels
+        forecastLabel = new JLabel();
+        currentWeatherLabel  = new JLabel();
+        humidityLabel = new JLabel();
+        temperatureLabel = new JLabel();
+        humidityValue = new JLabel();
+        temperatureValue = new JLabel();
         
         //Initializing Settings buttons/Labels
         settingLabel = new JLabel();
@@ -214,18 +240,19 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 
         
         //Forecast Tab
-        javax.swing.GroupLayout forecastTabLayout = new javax.swing.GroupLayout(forecastTab);
+        /*javax.swing.GroupLayout forecastTabLayout = new javax.swing.GroupLayout(forecastTab);
         forecastTab.setLayout(forecastTabLayout);
         forecastTabLayout.setHorizontalGroup(
-            forecastTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        forecastTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 281, Short.MAX_VALUE)
-        );
+         );
         forecastTabLayout.setVerticalGroup(
-            forecastTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        forecastTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 440, Short.MAX_VALUE)
-        );
+         );
+        
 
-        tabbedPane.addTab("Forecast", forecastTab);
+        tabbedPane.addTab("Forecast", forecastTab);*/
         
         //Weather Settings
         weatherSettingsLabel.setText("Weather Settings");
@@ -416,8 +443,94 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         
         pack();
     }// </editor-fold>
+    
+    private void createForecastTab() {
+    	if (hasWeatherForCity) {
+    		try{
+    			forecastLabel.setText("Forecast");
+            	currentWeatherLabel.setText("Current Forecast for " + location + ":" );
+            	humidityLabel.setText("Humidity:");
+            	temperatureLabel.setText("Temperature (degree Farenheit): ");
+            	humidityValue.setText(humidity);
+            	
+            	String sTemp = temperature.toString();
+            	sTemp = sTemp.substring(0, 4);
+            	temperatureValue.setText(sTemp);
+            	weatherImage = new JLabel(usrWeatherData.getWeatherIcon());
 
+                javax.swing.GroupLayout forecastTabLayout = new javax.swing.GroupLayout(forecastTab);
+                forecastTab.setLayout(forecastTabLayout);
+                forecastTabLayout.setHorizontalGroup(
+                    forecastTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(forecastTabLayout.createSequentialGroup()
+                        .addGroup(forecastTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(forecastTabLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(currentWeatherLabel))
+                            .addGroup(forecastTabLayout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addGroup(forecastTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, forecastTabLayout.createSequentialGroup()
+                                        .addComponent(humidityLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(humidityValue))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, forecastTabLayout.createSequentialGroup()
+                                        .addComponent(temperatureLabel)
+                                        .addGap(20, 20, 20)
+                                        .addComponent(temperatureValue))))
+                            .addGroup(forecastTabLayout.createSequentialGroup()
+                                .addGap(111, 111, 111)
+                                .addGroup(forecastTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(weatherImage)
+                                    .addComponent(forecastLabel))))
+                        .addContainerGap(95, Short.MAX_VALUE))
+                );
+                forecastTabLayout.setVerticalGroup(
+                    forecastTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(forecastTabLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(forecastLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(currentWeatherLabel)
+                        .addGap(58, 58, 58)
+                        .addComponent(weatherImage)
+                        .addGap(120, 120, 120)
+                        .addGroup(forecastTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(temperatureLabel)
+                            .addComponent(temperatureValue))
+                        .addGap(28, 28, 28)
+                        .addGroup(forecastTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(humidityLabel)
+                            .addComponent(humidityValue))
+                        .addGap(27, 27, 27)
+                        .addContainerGap(234, Short.MAX_VALUE))
+                );
+                
+                tabbedPane.addTab("Forecast", forecastTab);
+    		} catch (IOException e) {
+    			e.printStackTrace();
+    		}
+        	
 
+            
+        } 
+    }
+    
+    private void updateForecastTab() {
+    	try {
+    		currentWeatherLabel.setText("Current Forecast for " + location + ":" );
+        	humidityValue.setText(humidity);
+        	
+        	String sTemp = temperature.toString();
+        	sTemp = sTemp.substring(0, 4);
+        	temperatureValue.setText(sTemp);
+        	weatherImage = new JLabel(usrWeatherData.getWeatherIcon());
+        	
+    	} catch (IOException e) {
+    		e.printStackTrace();
+    	}
+    	
+    }
     /**
      * @param args the command line arguments
      */
@@ -462,9 +575,15 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 				if (! (weatherCityField.getText().equals(""))) {
 					try{
 						locWeatherURL = startURL + "q=" + weatherCityField.getText() + endURL;
-						System.out.println(locWeatherURL);
+						//System.out.println(locWeatherURL);
 						usrWeatherData = new ProcessUrl(locWeatherURL);
 						
+						hasWeatherForCity = true;
+						location = weatherCityField.getText();
+						temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
+						humidity = usrWeatherData.getWeatherHumidity();
+						
+						createForecastTab();
 						//Start the refreshing of ambient part of the User Interface
 						int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
 						
@@ -476,13 +595,17 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 				        		try{
 				        			usrWeatherData = new ProcessUrl(locWeatherURL);
 				        			usrWeatherData.showWeatherIcon();
+				        			location = weatherCityField.getText();
+									temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
+									humidity = usrWeatherData.getWeatherHumidity();
+				        			updateForecastTab();
 				        		} catch (Exception e){
 				        			e.printStackTrace();
-	                      System.err.println("Error with Timer");
-	                      JOptionPane.showMessageDialog(null,
-	                          "Error with refresh timer",
-	                          "alert",
-	                          JOptionPane.ERROR_MESSAGE);
+				        			System.err.println("Error with Timer");
+				        			JOptionPane.showMessageDialog(null,
+				        					"Error with refresh timer",
+				        					"alert",
+				        					JOptionPane.ERROR_MESSAGE);
 				        		}
 				        	}
 				        }, 0, refreshInMinutes);
@@ -497,9 +620,13 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 				} else {
 					try{
 						locWeatherURL = startURL + "zip=" + zipcodeField.getText() + ",us" + endURL;
-						System.out.println(locWeatherURL);
+						//System.out.println(locWeatherURL);
 						usrWeatherData = new ProcessUrl(locWeatherURL);
-						
+						hasWeatherForCity = true;
+						location = weatherCityField.getText();
+						temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
+						humidity = usrWeatherData.getWeatherHumidity();
+						createForecastTab();
 						//Start the refreshing of ambient part of the User Interface
 						int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
 						
@@ -511,6 +638,10 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 				        		try{
 				        			usrWeatherData = new ProcessUrl(locWeatherURL);
 				        			usrWeatherData.showWeatherIcon();
+				        			location = weatherCityField.getText();
+									temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
+									humidity = usrWeatherData.getWeatherHumidity();
+				        			updateForecastTab();
 				        		} catch (Exception e){
 				        			e.printStackTrace();
 	                      System.err.println("Error with Timer");
