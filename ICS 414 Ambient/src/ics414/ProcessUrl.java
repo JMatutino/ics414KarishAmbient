@@ -46,7 +46,7 @@ public class ProcessUrl {
             System.err.println("ERROR: Did NOT get data from URL");
         }
         else {
-            System.out.println(this.content);
+            //System.out.println(this.content);
         }
 
         return this.content;
@@ -74,6 +74,7 @@ public class ProcessUrl {
         frame.setUndecorated(true);
         frame.setBackground(new Color(0, 0, 0, 0));
         frame.setAlwaysOnTop(true);
+        //frame.setOpacity(10);
         // Without this, the window is draggable from any non transparent
         // point, including points  inside textboxes.
         frame.getRootPane().putClientProperty("apple.awt.draggableWindowBackground", false);
@@ -94,7 +95,7 @@ public class ProcessUrl {
         
     }
 
-    public static void main(String[] args) throws Exception {
+    /*public static void main(String[] args) throws Exception {
     	
         System.out.println("This is a test:");
         ProcessUrl weatherData = new ProcessUrl("http://api.openweathermap.org/data/2.5/weather?q=Kahuku%2Cus&appid=2de143494c0b295cca9337e1e96b00e0");
@@ -137,7 +138,7 @@ public class ProcessUrl {
         	}
         }, 0, refreshInMinutes);
         
-    }
+    }*/
     
     
 
