@@ -26,6 +26,10 @@ import java.util.TimerTask;
 public class GuiUserInterface extends javax.swing.JFrame implements ActionListener {
 	
     // Variables declaration - do not modify  
+	private String startURL = "http://api.openweathermap.org/data/2.5/weather?";
+	private String endURL = "&appid=2de143494c0b295cca9337e1e96b00e0";
+	private String locWeatherURL = new String();
+	
 	//Menu Bar at the top
 	private JMenuBar topMenuBar;
     private JMenu topMenu1, topMenu2;
@@ -47,9 +51,9 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     private JSeparator settingSeparator1, settingSeparator2;
     private JButton weatherDataButton, uploadCalendarButton, saveSettingsButton;
     private JLabel settingLabel, calendarSettingsLabel, weatherSettingsLabel,
-    	otherSettingsLabel, enterUrlLabel, refreshLabel, uploadCalendarLabel,
+    	otherSettingsLabel, enterCityLabel, refreshLabel, uploadCalendarLabel,
     	warningLabel1, warningLabel2, weatherORLabel, getWeatherLabel;
-    private JTextField weatherURLField;
+    private JTextField weatherCityField;
     private JComboBox<Integer> refreshBox;
     
     private JMenuItem menuItem;
@@ -99,9 +103,9 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         
         //Initializing Settings buttons/Labels
         settingLabel = new JLabel();
-        enterUrlLabel = new JLabel();
+        enterCityLabel = new JLabel();
         refreshLabel = new JLabel();
-        weatherURLField = new JTextField();
+        weatherCityField = new JTextField();
         weatherDataButton = new JButton();
         //zipcodeLabel = new JLabel();
         uploadCalendarLabel = new JLabel();
@@ -225,10 +229,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         
         //Weather Settings
         weatherSettingsLabel.setText("Weather Settings");
-        enterUrlLabel.setText("Enter URL for Weather");
-        //weatherURLField.setText("weatherURLField");
-        weatherURLField.setEditable(true);
-        //zipcodeField.setText("zipcodeField");
+        enterCityLabel.setText("Enter City for Weather");
         getWeatherLabel.setText("Get Weather Data: ");
         weatherDataButton.setText("Get Weather");
         weatherDataButton.addActionListener(this);
@@ -255,7 +256,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
-                        .addComponent(weatherURLField))
+                        .addComponent(weatherCityField))
                     .addComponent(settingSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(settingSeparator1)
                     .addGroup(jPanel5Layout.createSequentialGroup()
@@ -277,7 +278,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                                     .addGroup(jPanel5Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(enterUrlLabel)
+                                            .addComponent(enterCityLabel)
                                             .addGroup(jPanel5Layout.createSequentialGroup()
                                                 .addComponent(getWeatherLabel)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -313,9 +314,9 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(weatherSettingsLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(enterUrlLabel)
+                .addComponent(enterCityLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(weatherURLField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(weatherCityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(weatherORLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -449,10 +450,12 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 		Object source = ae.getSource();
 		
 		if (source == weatherDataButton) {
-			if (!(weatherURLField.getText().equals(""))) {
+			if (!(weatherCityField.getText().equals(""))) {
 				try{
-					usrWeatherData = new ProcessUrl(weatherURLField.getText());
-					String weatherUrl = weatherURLField.getText();
+					locWeatherURL = startURL + "q=" + weatherCityField.getText() + endURL;
+					System.out.println(locWeatherURL);
+					usrWeatherData = new ProcessUrl(locWeatherURL);
+					String weatherUrl = weatherCityField.getText();
 					
 					//Start the refreshing of ambient part of the User Interface
 					int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
