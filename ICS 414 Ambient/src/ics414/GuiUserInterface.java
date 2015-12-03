@@ -232,7 +232,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         enterCityLabel.setText("Enter City for Weather");
         getWeatherLabel.setText("Get Weather Data: ");
         weatherORLabel.setText("OR");
-        zipcodeLabel.setText("Enter Zip Code:");
+        zipcodeLabel.setText("Enter Zip Code: (US Only)");
         weatherDataButton.setText("Get Weather");
         weatherDataButton.addActionListener(this);
         
