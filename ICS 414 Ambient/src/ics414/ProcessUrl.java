@@ -97,8 +97,8 @@ public class ProcessUrl {
         frame.getRootPane().putClientProperty("apple.awt.draggableWindowBackground", false);
 
         frame.getContentPane().setLayout(new java.awt.BorderLayout());
-        //ImageIcon toUse = increaseImageSize(getWeatherIcon());
-        frame.getContentPane().add(new JLabel(getWeatherIcon()), java.awt.BorderLayout.CENTER);
+        ImageIcon toUse = increaseImageSize(getWeatherIcon());
+        frame.getContentPane().add(new JLabel(toUse), java.awt.BorderLayout.CENTER);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.pack();
@@ -115,7 +115,7 @@ public class ProcessUrl {
     
     public ImageIcon increaseImageSize(ImageIcon image){
     	Image img = image.getImage();
-    	Image scaleImage = img.getScaledInstance(250, 300, java.awt.Image.SCALE_SMOOTH);
+    	Image scaleImage = img.getScaledInstance(50, 100, java.awt.Image.SCALE_SMOOTH);
     	ImageIcon resizedImage = new ImageIcon(scaleImage);
     	return resizedImage;
     }
