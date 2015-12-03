@@ -51,9 +51,9 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     private JSeparator settingSeparator1, settingSeparator2;
     private JButton weatherDataButton, uploadCalendarButton, saveSettingsButton;
     private JLabel settingLabel, calendarSettingsLabel, weatherSettingsLabel,
-    	otherSettingsLabel, enterCityLabel, refreshLabel, uploadCalendarLabel,
+    	otherSettingsLabel, enterCityLabel, refreshLabel, zipcodeLabel, uploadCalendarLabel,
     	warningLabel1, warningLabel2, weatherORLabel, getWeatherLabel;
-    private JTextField weatherCityField;
+    private JTextField weatherCityField, zipcodeField;
     private JComboBox<Integer> refreshBox;
     
     private JMenuItem menuItem;
@@ -107,13 +107,13 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         refreshLabel = new JLabel();
         weatherCityField = new JTextField();
         weatherDataButton = new JButton();
-        //zipcodeLabel = new JLabel();
+        zipcodeLabel = new JLabel();
         uploadCalendarLabel = new JLabel();
         uploadCalendarButton = new JButton();
         warningLabel1 = new JLabel();
         warningLabel2 = new JLabel();
         weatherORLabel = new JLabel();
-        //zipcodeField = new JTextField();
+        zipcodeField = new JTextField();
         getWeatherLabel = new JLabel();
         settingSeparator1 = new JSeparator();
         settingSeparator2 = new JSeparator();
@@ -231,6 +231,8 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         weatherSettingsLabel.setText("Weather Settings");
         enterCityLabel.setText("Enter City for Weather");
         getWeatherLabel.setText("Get Weather Data: ");
+        weatherORLabel.setText("OR");
+        zipcodeLabel.setText("Enter Zip Code:");
         weatherDataButton.setText("Get Weather");
         weatherDataButton.addActionListener(this);
         
@@ -270,6 +272,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                	.addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(weatherORLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addContainerGap()
@@ -278,7 +281,8 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                                     .addGroup(jPanel5Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(enterCityLabel)
+                                        	.addComponent(zipcodeLabel)
+                                        	.addComponent(enterCityLabel)
                                             .addGroup(jPanel5Layout.createSequentialGroup()
                                                 .addComponent(getWeatherLabel)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -320,6 +324,10 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(weatherORLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(zipcodeLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(getWeatherLabel)
                     .addComponent(weatherDataButton))
@@ -450,42 +458,81 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 		Object source = ae.getSource();
 		
 		if (source == weatherDataButton) {
-			if (!(weatherCityField.getText().equals(""))) {
-				try{
-					locWeatherURL = startURL + "q=" + weatherCityField.getText() + endURL;
-					System.out.println(locWeatherURL);
-					usrWeatherData = new ProcessUrl(locWeatherURL);
-					String weatherUrl = weatherCityField.getText();
-					
-					//Start the refreshing of ambient part of the User Interface
-					int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
-					
-			        refreshInMinutes *= Integer.parseInt(refreshBox.getSelectedItem().toString());
-			        
-			        Timer refreshTimer = new Timer();
-			        refreshTimer.scheduleAtFixedRate(new TimerTask(){
-			        	public void run() {
-			        		try{
-			        			usrWeatherData = new ProcessUrl(weatherUrl);
-			        			usrWeatherData.showWeatherIcon();
-			        		} catch (Exception e){
-			        			e.printStackTrace();
-                      System.err.println("Error with Timer");
-                      JOptionPane.showMessageDialog(null,
-                          "Error with refresh timer",
-                          "alert",
-                          JOptionPane.ERROR_MESSAGE);
-			        		}
-			        	}
-			        }, 0, refreshInMinutes);
-				} catch(Exception e) {
-					e.printStackTrace();
-            JOptionPane.showMessageDialog(null,
-                "Problem processing Weather URL",
-                "alert",
-                JOptionPane.ERROR_MESSAGE);
+			if ( !(weatherCityField.getText().equals("") && zipcodeField.getText().equals("")) ) {
+				if (! (weatherCityField.getText().equals(""))) {
+					try{
+						locWeatherURL = startURL + "q=" + weatherCityField.getText() + endURL;
+						System.out.println(locWeatherURL);
+						usrWeatherData = new ProcessUrl(locWeatherURL);
+						
+						//Start the refreshing of ambient part of the User Interface
+						int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
+						
+				        refreshInMinutes *= Integer.parseInt(refreshBox.getSelectedItem().toString());
+				        
+				        Timer refreshTimer = new Timer();
+				        refreshTimer.scheduleAtFixedRate(new TimerTask(){
+				        	public void run() {
+				        		try{
+				        			usrWeatherData = new ProcessUrl(locWeatherURL);
+				        			usrWeatherData.showWeatherIcon();
+				        		} catch (Exception e){
+				        			e.printStackTrace();
+	                      System.err.println("Error with Timer");
+	                      JOptionPane.showMessageDialog(null,
+	                          "Error with refresh timer",
+	                          "alert",
+	                          JOptionPane.ERROR_MESSAGE);
+				        		}
+				        	}
+				        }, 0, refreshInMinutes);
+				    
+					} catch(Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(null,
+								"Problem processing Weather URL",
+								"alert",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				} else {
+					try{
+						locWeatherURL = startURL + "zip=" + zipcodeField.getText() + ",us" + endURL;
+						System.out.println(locWeatherURL);
+						usrWeatherData = new ProcessUrl(locWeatherURL);
+						
+						//Start the refreshing of ambient part of the User Interface
+						int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
+						
+				        refreshInMinutes *= Integer.parseInt(refreshBox.getSelectedItem().toString());
+				        
+				        Timer refreshTimer = new Timer();
+				        refreshTimer.scheduleAtFixedRate(new TimerTask(){
+				        	public void run() {
+				        		try{
+				        			usrWeatherData = new ProcessUrl(locWeatherURL);
+				        			usrWeatherData.showWeatherIcon();
+				        		} catch (Exception e){
+				        			e.printStackTrace();
+	                      System.err.println("Error with Timer");
+	                      JOptionPane.showMessageDialog(null,
+	                          "Error with refresh timer",
+	                          "alert",
+	                          JOptionPane.ERROR_MESSAGE);
+				        		}
+				        	}
+				        }, 0, refreshInMinutes);
+					} catch(Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(null,
+								"Problem processing Weather URL",
+								"alert",
+								JOptionPane.ERROR_MESSAGE);
+					}
 				}
+				
 			}
+			
+			
 		}
 		
 	}
