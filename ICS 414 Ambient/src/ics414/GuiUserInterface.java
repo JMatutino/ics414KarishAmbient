@@ -142,6 +142,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         weatherORLabel.setText("Get Weather Data: ");
         zipcodeLabel.setText("Enter Zip Code: (US Only)");
         weatherCityButton.setText("Using City");
+        weatherCityButton.addActionListener(this);
         weatherDataButton.setText("Using Zipcode");
         weatherDataButton.addActionListener(this);
 
@@ -483,103 +484,102 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 	public void actionPerformed(ActionEvent ae) {
 		Object source = ae.getSource();
 		
-		if (source == weatherDataButton) {
-			if ( !(weatherCityField.getText().equals("") && zipcodeField.getText().equals("")) ) {
-				if (! (weatherCityField.getText().equals(""))) {
-					if(hasForecastPane) {
-						//Forecast Pane up
-						updateForecastTab();
-					} else {
-						//Forecast Pane not up
-						try {
-							locWeatherURL = startURL + "q=" + weatherCityField.getText() + endURL;
-							//System.out.println(locWeatherURL);
-							usrWeatherData = new ProcessUrl(locWeatherURL);		
-							hasWeatherForCity = true;
-							location = weatherCityField.getText();
-							temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
-							humidity = usrWeatherData.getWeatherHumidity();		
-							createForecastTab();
-							//Start the refreshing of ambient part of the User Interface
-							int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
+		if (source == weatherCityButton) {
+			if(hasForecastPane) {
+				//Forecast Pane up
+				updateForecastTab();
+			} else {
+				//Forecast Pane not up
+				try {
+					locWeatherURL = startURL + "q=" + weatherCityField.getText() + endURL;
+					//System.out.println(locWeatherURL);
+					usrWeatherData = new ProcessUrl(locWeatherURL);		
+					hasWeatherForCity = true;
+					location = weatherCityField.getText();
+					temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
+					humidity = usrWeatherData.getWeatherHumidity();		
+					createForecastTab();
+					//Start the refreshing of ambient part of the User Interface
+					int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
 							
-						    refreshInMinutes *= Integer.parseInt(refreshBox.getSelectedItem().toString());
+					refreshInMinutes *= Integer.parseInt(refreshBox.getSelectedItem().toString());
 						        
-						    Timer refreshTimer = new Timer();
-						    refreshTimer.scheduleAtFixedRate(new TimerTask(){
-						        public void run() {
-						       		try{
-						      			usrWeatherData = new ProcessUrl(locWeatherURL);
-						       			usrWeatherData.showWeatherIcon();
-						       			location = weatherCityField.getText();
-										temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
-										humidity = usrWeatherData.getWeatherHumidity();
-					        			updateForecastTab();
-					        		} catch (Exception e){
-					        			e.printStackTrace();
-					        			System.err.println("Error with Timer");
-					        			JOptionPane.showMessageDialog(null,
-						        					"Error with refresh timer",
-						        					"alert",
-						        					JOptionPane.ERROR_MESSAGE);
-						        	}
-						        }
-						    }, 0, refreshInMinutes);
-						} catch(Exception e) {
-							e.printStackTrace();
-							JOptionPane.showMessageDialog(null,
-									"Problem processing Weather URL",
-									"alert",
-									JOptionPane.ERROR_MESSAGE);
+					Timer refreshTimer = new Timer();
+					refreshTimer.scheduleAtFixedRate(new TimerTask(){
+						public void run() {
+							try{
+								usrWeatherData = new ProcessUrl(locWeatherURL);
+								usrWeatherData.showWeatherIcon();
+								location = weatherCityField.getText();
+								temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
+								humidity = usrWeatherData.getWeatherHumidity();
+								updateForecastTab();
+							} catch (Exception e){
+					        	e.printStackTrace();
+					        	System.err.println("Error with Timer");
+					        	JOptionPane.showMessageDialog(null,
+					        			"Error with refresh timer",
+						        		"alert",
+						        		JOptionPane.ERROR_MESSAGE);
+							}
 						}
-					}
-				} else {
-					try{
-						locWeatherURL = startURL + "zip=" + zipcodeField.getText() + ",us" + endURL;
-						//System.out.println(locWeatherURL);
-						usrWeatherData = new ProcessUrl(locWeatherURL);
-						hasWeatherForCity = true;
-						location = weatherCityField.getText();
-						temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
-						humidity = usrWeatherData.getWeatherHumidity();
-						createForecastTab();
-						//Start the refreshing of ambient part of the User Interface
-						int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
-						
-				        refreshInMinutes *= Integer.parseInt(refreshBox.getSelectedItem().toString());
-				        
-				        Timer refreshTimer = new Timer();
-				        refreshTimer.scheduleAtFixedRate(new TimerTask(){
-				        	public void run() {
-				        		try{
-				        			usrWeatherData = new ProcessUrl(locWeatherURL);
-				        			usrWeatherData.showWeatherIcon();
-				        			location = weatherCityField.getText();
-									temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
-									humidity = usrWeatherData.getWeatherHumidity();
-				        			updateForecastTab();
-				        		} catch (Exception e){
-				        			e.printStackTrace();
-	                      System.err.println("Error with Timer");
-	                      JOptionPane.showMessageDialog(null,
-	                          "Error with refresh timer",
-	                          "alert",
-	                          JOptionPane.ERROR_MESSAGE);
-				        		}
-				        	}
-				        }, 0, refreshInMinutes);
-					} catch(Exception e) {
-						e.printStackTrace();
-						JOptionPane.showMessageDialog(null,
-								"Problem processing Weather URL",
-								"alert",
-								JOptionPane.ERROR_MESSAGE);
-					}
+					}, 0, refreshInMinutes);
+				} catch(Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null,
+							"Problem processing Weather URL",
+							"alert",
+							JOptionPane.ERROR_MESSAGE);
 				}
-				
+			}	
+		}
+		
+		if (source == weatherDataButton){
+			if (hasForecastPane) {
+				updateForecastTab();
+			} else {
+				try{
+					locWeatherURL = startURL + "zip=" + zipcodeField.getText() + ",us" + endURL;
+					//System.out.println(locWeatherURL);
+					usrWeatherData = new ProcessUrl(locWeatherURL);
+					hasWeatherForCity = true;
+					location = weatherCityField.getText();
+					temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
+					humidity = usrWeatherData.getWeatherHumidity();
+					createForecastTab();
+					//Start the refreshing of ambient part of the User Interface
+					int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
+					
+			        refreshInMinutes *= Integer.parseInt(refreshBox.getSelectedItem().toString());
+			        
+			        Timer refreshTimer = new Timer();
+			        refreshTimer.scheduleAtFixedRate(new TimerTask(){
+			        	public void run() {
+			        		try{
+			        			usrWeatherData = new ProcessUrl(locWeatherURL);
+			        			usrWeatherData.showWeatherIcon();
+			        			location = weatherCityField.getText();
+								temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
+								humidity = usrWeatherData.getWeatherHumidity();
+			        			updateForecastTab();
+			        		} catch (Exception e){
+			        			e.printStackTrace();
+	                  System.err.println("Error with Timer");
+	                  JOptionPane.showMessageDialog(null,
+	                      "Error with refresh timer",
+	                      "alert",
+	                      JOptionPane.ERROR_MESSAGE);
+			        		}
+			        	}
+			        }, 0, refreshInMinutes);
+				} catch(Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(null,
+							"Problem processing Weather URL",
+							"alert",
+							JOptionPane.ERROR_MESSAGE);
+				}
 			}
-			
-			
 		}
 		
 	}
