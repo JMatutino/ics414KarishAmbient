@@ -115,7 +115,7 @@ public class ProcessUrl {
     
     public ImageIcon increaseImageSize(ImageIcon image){
     	Image img = image.getImage();
-    	Image scaleImage = img.getScaledInstance(100, 100, java.awt.Image.SCALE_SMOOTH);
+    	Image scaleImage = img.getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH);
     	ImageIcon resizedImage = new ImageIcon(scaleImage);
     	return resizedImage;
     }

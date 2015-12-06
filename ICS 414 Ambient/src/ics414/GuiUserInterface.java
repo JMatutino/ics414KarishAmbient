@@ -47,7 +47,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     
     // Settings Pane
     private JSeparator settingSeparator1;
-    private JButton weatherDataButton, weatherCityButton,saveSettingsButton;
+    private JButton weatherZipButton, weatherCityButton,saveSettingsButton;
     private JLabel settingLabel, weatherSettingsLabel, otherSettingsLabel, enterCityLabel,
     	refreshLabel, zipcodeLabel, weatherORLabel, getWeatherLabel;
     private JTextField weatherCityField, zipcodeField;
@@ -108,7 +108,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         enterCityLabel = new JLabel();
         refreshLabel = new JLabel();
         weatherCityField = new JTextField();
-        weatherDataButton = new JButton();
+        weatherZipButton = new JButton();
         weatherCityButton = new JButton();
         zipcodeLabel = new JLabel();
         weatherORLabel = new JLabel();
@@ -143,8 +143,8 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         zipcodeLabel.setText("Enter Zip Code: (US Only)");
         weatherCityButton.setText("Using City");
         weatherCityButton.addActionListener(this);
-        weatherDataButton.setText("Using Zipcode");
-        weatherDataButton.addActionListener(this);
+        weatherZipButton.setText("Using Zipcode");
+        weatherZipButton.addActionListener(this);
 
         //Other Settings
         otherSettingsLabel.setText("Other Settings");
@@ -173,7 +173,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                                             .addGroup(settingTabLayout.createSequentialGroup()
                                                 .addComponent(getWeatherLabel)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(weatherDataButton))
+                                                .addComponent(weatherZipButton))
                                             .addComponent(weatherCityField, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                             .addGroup(settingTabLayout.createSequentialGroup()
                                 .addGap(151, 151, 151)
@@ -221,7 +221,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(getWeatherLabel)
-                    .addComponent(weatherDataButton))
+                    .addComponent(weatherZipButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(settingSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -233,7 +233,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                 .addContainerGap(271, Short.MAX_VALUE))
         );
 
-        tabbedPane.addTab("Settings", settingTab);
+        tabbedPane.addTab("Setup", settingTab);
 
         javax.swing.GroupLayout tabContainerLayout = new javax.swing.GroupLayout(tabContainer);
         tabContainer.setLayout(tabContainerLayout);
@@ -439,9 +439,9 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 							}
 						}, 0, refreshInMinutes);
 					} catch(Exception e) {
-						e.printStackTrace();
+						//e.printStackTrace();
 						JOptionPane.showMessageDialog(null,
-								"Problem processing Weather URL",
+								"You entered an invalid city!",
 								"alert",
 								JOptionPane.ERROR_MESSAGE);
 					}
@@ -449,7 +449,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 			}	
 		}
 		
-		if (source == weatherDataButton){
+		if (source == weatherZipButton){
 			if (hasForecastPane) {
 				updateForecastTab();
 			} else {
@@ -489,9 +489,9 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 				        	}
 				        }, 0, refreshInMinutes);
 					} catch(Exception e) {
-						e.printStackTrace();
+						//e.printStackTrace();
 						JOptionPane.showMessageDialog(null,
-								"Problem processing Weather URL",
+								"You entered an invalid zipcode!",
 								"alert",
 								JOptionPane.ERROR_MESSAGE);
 					}
