@@ -151,93 +151,6 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         refreshLabel.setText("Change Refresh Rate (Minutes)");
         saveSettingsButton.setText("Save Settings");
         saveSettingsButton.addActionListener(this);
-
-        /*.swing.GroupLayout settingTabLayout = new javax.swing.GroupLayout(settingTab);
-        settingTab.setLayout(settingTabLayout);
-        settingTabLayout.setHorizontalGroup(
-            settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(settingTabLayout.createSequentialGroup()
-                .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(settingTabLayout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(weatherCityField))
-                    .addGap(13, 13, 13)
-                    .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(weatherORLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(weatherCityButton))
-                    .addComponent(settingSeparator1)
-                    .addGroup(settingTabLayout.createSequentialGroup()
-                        .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(settingTabLayout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                	.addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(weatherORLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(settingTabLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(weatherSettingsLabel)
-                                    .addGroup(settingTabLayout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        	.addComponent(zipcodeLabel)
-                                        	.addComponent(enterCityLabel)
-                                            .addGroup(settingTabLayout.createSequentialGroup()
-                                                .addComponent(getWeatherLabel)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                .addComponent(weatherDataButton))))))
-                            .addComponent(otherSettingsLabel)
-                            .addGroup(settingTabLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(refreshLabel))
-                            .addGroup(settingTabLayout.createSequentialGroup()
-                            		.addContainerGap()
-                            		.addComponent(refreshBox))
-                            .addGroup(settingTabLayout.createSequentialGroup()
-                                .addGap(151, 151, 151)
-                                .addComponent(settingLabel)))
-                        .addGap(0, 76, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(settingTabLayout.createSequentialGroup()
-                .addGap(90, 90, 90)
-                .addComponent(saveSettingsButton)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        settingTabLayout.setVerticalGroup(
-            settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(settingTabLayout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(settingLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(weatherSettingsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(enterCityLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(weatherCityField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(weatherORLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(zipcodeLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(getWeatherLabel)
-                    .addComponent(weatherDataButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(settingSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(otherSettingsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(refreshLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(refreshBox)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 128, Short.MAX_VALUE)
-                .addComponent(saveSettingsButton)
-                .addContainerGap())
-        );
-
-        tabbedPane.addTab("Setup", settingTab);*/
         
         javax.swing.GroupLayout settingTabLayout = new javax.swing.GroupLayout(settingTab);
         settingTab.setLayout(settingTabLayout);
@@ -490,47 +403,49 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 				updateForecastTab();
 			} else {
 				//Forecast Pane not up
-				try {
-					locWeatherURL = startURL + "q=" + weatherCityField.getText() + endURL;
-					//System.out.println(locWeatherURL);
-					usrWeatherData = new ProcessUrl(locWeatherURL);		
-					hasWeatherForCity = true;
-					location = weatherCityField.getText();
-					temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
-					humidity = usrWeatherData.getWeatherHumidity();		
-					createForecastTab();
-					//Start the refreshing of ambient part of the User Interface
-					int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
-							
-					refreshInMinutes *= Integer.parseInt(refreshBox.getSelectedItem().toString());
-						        
-					Timer refreshTimer = new Timer();
-					refreshTimer.scheduleAtFixedRate(new TimerTask(){
-						public void run() {
-							try{
-								usrWeatherData = new ProcessUrl(locWeatherURL);
-								usrWeatherData.showWeatherIcon();
-								location = weatherCityField.getText();
-								temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
-								humidity = usrWeatherData.getWeatherHumidity();
-								updateForecastTab();
-							} catch (Exception e){
-					        	e.printStackTrace();
-					        	System.err.println("Error with Timer");
-					        	JOptionPane.showMessageDialog(null,
-					        			"Error with refresh timer",
-						        		"alert",
-						        		JOptionPane.ERROR_MESSAGE);
+				if (!(weatherCityField.getText().equals(""))){
+					try {
+						locWeatherURL = startURL + "q=" + weatherCityField.getText() + endURL;
+						//System.out.println(locWeatherURL);
+						usrWeatherData = new ProcessUrl(locWeatherURL);		
+						hasWeatherForCity = true;
+						location = weatherCityField.getText();
+						temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
+						humidity = usrWeatherData.getWeatherHumidity();		
+						createForecastTab();
+						//Start the refreshing of ambient part of the User Interface
+						int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
+								
+						refreshInMinutes *= Integer.parseInt(refreshBox.getSelectedItem().toString());
+							        
+						Timer refreshTimer = new Timer();
+						refreshTimer.scheduleAtFixedRate(new TimerTask(){
+							public void run() {
+								try{
+									usrWeatherData = new ProcessUrl(locWeatherURL);
+									usrWeatherData.showWeatherIcon();
+									location = weatherCityField.getText();
+									temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
+									humidity = usrWeatherData.getWeatherHumidity();
+									updateForecastTab();
+								} catch (Exception e){
+						        	e.printStackTrace();
+						        	System.err.println("Error with Timer");
+						        	JOptionPane.showMessageDialog(null,
+						        			"Error with refresh timer",
+							        		"alert",
+							        		JOptionPane.ERROR_MESSAGE);
+								}
 							}
-						}
-					}, 0, refreshInMinutes);
-				} catch(Exception e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(null,
-							"Problem processing Weather URL",
-							"alert",
-							JOptionPane.ERROR_MESSAGE);
-				}
+						}, 0, refreshInMinutes);
+					} catch(Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(null,
+								"Problem processing Weather URL",
+								"alert",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}	
 			}	
 		}
 		
@@ -538,51 +453,50 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 			if (hasForecastPane) {
 				updateForecastTab();
 			} else {
-				try{
-					locWeatherURL = startURL + "zip=" + zipcodeField.getText() + ",us" + endURL;
-					//System.out.println(locWeatherURL);
-					usrWeatherData = new ProcessUrl(locWeatherURL);
-					hasWeatherForCity = true;
-					location = weatherCityField.getText();
-					temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
-					humidity = usrWeatherData.getWeatherHumidity();
-					createForecastTab();
-					//Start the refreshing of ambient part of the User Interface
-					int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
-					
-			        refreshInMinutes *= Integer.parseInt(refreshBox.getSelectedItem().toString());
-			        
-			        Timer refreshTimer = new Timer();
-			        refreshTimer.scheduleAtFixedRate(new TimerTask(){
-			        	public void run() {
-			        		try{
-			        			usrWeatherData = new ProcessUrl(locWeatherURL);
-			        			usrWeatherData.showWeatherIcon();
-			        			location = weatherCityField.getText();
-								temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
-								humidity = usrWeatherData.getWeatherHumidity();
-			        			updateForecastTab();
-			        		} catch (Exception e){
-			        			e.printStackTrace();
-	                  System.err.println("Error with Timer");
-	                  JOptionPane.showMessageDialog(null,
-	                      "Error with refresh timer",
-	                      "alert",
-	                      JOptionPane.ERROR_MESSAGE);
-			        		}
-			        	}
-			        }, 0, refreshInMinutes);
-				} catch(Exception e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(null,
-							"Problem processing Weather URL",
-							"alert",
-							JOptionPane.ERROR_MESSAGE);
-				}
+				if (!(zipcodeField.getText().equals("") )) {
+					try{
+						locWeatherURL = startURL + "zip=" + zipcodeField.getText() + ",us" + endURL;
+						//System.out.println(locWeatherURL);
+						usrWeatherData = new ProcessUrl(locWeatherURL);
+						hasWeatherForCity = true;
+						location = weatherCityField.getText();
+						temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
+						humidity = usrWeatherData.getWeatherHumidity();
+						createForecastTab();
+						//Start the refreshing of ambient part of the User Interface
+						int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
+						
+				        refreshInMinutes *= Integer.parseInt(refreshBox.getSelectedItem().toString());
+				        
+				        Timer refreshTimer = new Timer();
+				        refreshTimer.scheduleAtFixedRate(new TimerTask(){
+				        	public void run() {
+				        		try{
+				        			usrWeatherData = new ProcessUrl(locWeatherURL);
+				        			usrWeatherData.showWeatherIcon();
+				        			location = weatherCityField.getText();
+									temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
+									humidity = usrWeatherData.getWeatherHumidity();
+				        			updateForecastTab();
+				        		} catch (Exception e){
+				        			e.printStackTrace();
+		                  System.err.println("Error with Timer");
+		                  JOptionPane.showMessageDialog(null,
+		                      "Error with refresh timer",
+		                      "alert",
+		                      JOptionPane.ERROR_MESSAGE);
+				        		}
+				        	}
+				        }, 0, refreshInMinutes);
+					} catch(Exception e) {
+						e.printStackTrace();
+						JOptionPane.showMessageDialog(null,
+								"Problem processing Weather URL",
+								"alert",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}			
 			}
-		}
-		
-	}
-
-               
+		}	
+	}          
 }
