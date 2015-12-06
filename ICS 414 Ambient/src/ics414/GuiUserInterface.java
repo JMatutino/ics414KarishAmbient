@@ -37,18 +37,8 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 	private JMenuBar topMenuBar;
     private JMenu topMenu1, topMenu2;
     //Tabs in the Interface
-    private JPanel tabContainer, generalTab, forecastTab, settingTab;
+    private JPanel tabContainer, forecastTab, settingTab;
     private JTabbedPane tabbedPane;
-    //General Pane
-    private JLabel upcomingEventLabel;
-    private JLabel generalLabel;
-    private JLabel createEventLabel;
-    private JLabel editEventLabel;
-    private JLabel deleteEventLabel;
-    private JButton createEventButton;
-    private JButton editEventButton;
-    private JButton deleteEventButton;
-    private TextArea upcomingEventArea;
     
     //Forecast Pane
     private JLabel forecastLabel, currentWeatherLabel, weatherImage, humidityLabel,
@@ -58,11 +48,10 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     
     
     // Settings Pane
-    private JSeparator settingSeparator1, settingSeparator2;
-    private JButton weatherDataButton, uploadCalendarButton, saveSettingsButton;
-    private JLabel settingLabel, calendarSettingsLabel, weatherSettingsLabel,
-    	otherSettingsLabel, enterCityLabel, refreshLabel, zipcodeLabel, uploadCalendarLabel,
-    	warningLabel1, warningLabel2, weatherORLabel, getWeatherLabel;
+    private JSeparator settingSeparator1;
+    private JButton weatherDataButton, saveSettingsButton;
+    private JLabel settingLabel, weatherSettingsLabel, otherSettingsLabel, enterCityLabel,
+    	refreshLabel, zipcodeLabel, weatherORLabel, getWeatherLabel;
     private JTextField weatherCityField, zipcodeField;
     private JComboBox<Integer> refreshBox;
     
@@ -99,7 +88,6 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     	//Tabs for the main part of the GUI
         tabContainer = new JPanel();
         tabbedPane = new JTabbedPane();
-        generalTab = new JPanel();
         forecastTab = new JPanel();
         settingTab = new JPanel();
         
@@ -107,17 +95,6 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         topMenuBar = new JMenuBar();
         topMenu1 = new JMenu();
         topMenu2 = new JMenu();
-        
-        //Initializing General Buttons/Labels
-        upcomingEventArea = new TextArea();
-        upcomingEventLabel = new JLabel();
-        generalLabel = new JLabel();
-        createEventButton = new JButton();
-        editEventButton = new JButton();
-        deleteEventButton = new JButton();
-        createEventLabel = new JLabel();
-        editEventLabel = new JLabel();
-        deleteEventLabel = new JLabel();
         
         //Forecast Labels
         forecastLabel = new JLabel();
@@ -134,16 +111,10 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         weatherCityField = new JTextField();
         weatherDataButton = new JButton();
         zipcodeLabel = new JLabel();
-        uploadCalendarLabel = new JLabel();
-        uploadCalendarButton = new JButton();
-        warningLabel1 = new JLabel();
-        warningLabel2 = new JLabel();
         weatherORLabel = new JLabel();
         zipcodeField = new JTextField();
         getWeatherLabel = new JLabel();
         settingSeparator1 = new JSeparator();
-        settingSeparator2 = new JSeparator();
-        calendarSettingsLabel = new JLabel();
         weatherSettingsLabel = new JLabel();
         otherSettingsLabel = new JLabel();
         saveSettingsButton = new JButton();
@@ -163,80 +134,6 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        
-        //General Tab
-        generalLabel.setText("General");
-        upcomingEventLabel.setText("Upcoming Events: ");
-        createEventLabel.setText("Create");
-        editEventLabel.setText("Edit");
-        deleteEventLabel.setText("Delete");
-        
-        createEventButton.setText("Create Event");
-        createEventButton.addActionListener(this);
-        editEventButton.setText("Edit Event");
-        editEventButton.addActionListener(this);
-        deleteEventButton.setText("Delete Event");
-        deleteEventButton.addActionListener(this);
-        
-        upcomingEventArea.setEditable(false);
-        
-        javax.swing.GroupLayout generalTabLayout = new javax.swing.GroupLayout(generalTab);
-        generalTab.setLayout(generalTabLayout);
-        generalTabLayout.setHorizontalGroup(
-            generalTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(generalTabLayout.createSequentialGroup()
-                .addGroup(generalTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(generalTabLayout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(generalLabel))
-                    .addGroup(generalTabLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(generalTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(upcomingEventLabel)
-                            .addGroup(generalTabLayout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(upcomingEventArea, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(generalTabLayout.createSequentialGroup()
-                        .addGap(24, 24, 24)
-                        .addGroup(generalTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(createEventLabel)
-                            .addComponent(editEventLabel)
-                            .addComponent(deleteEventLabel))
-                        .addGap(18, 18, 18)
-                        .addGroup(generalTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(createEventButton)
-                            .addComponent(editEventButton)
-                            .addComponent(deleteEventButton))))
-                .addContainerGap(33, Short.MAX_VALUE))
-        );
-        generalTabLayout.setVerticalGroup(
-            generalTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(generalTabLayout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addComponent(generalLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(generalTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(generalTabLayout.createSequentialGroup()
-                        .addComponent(upcomingEventLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(upcomingEventArea, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(generalTabLayout.createSequentialGroup()
-                        .addGap(310, 310, Short.MAX_VALUE)
-                        .addGroup(generalTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(createEventLabel)
-                            .addComponent(createEventButton))))
-                .addGap(18, 18, 18)
-                .addGroup(generalTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(editEventLabel)
-                    .addComponent(editEventButton))
-                .addGap(23, 23, 23)
-                .addGroup(generalTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(deleteEventLabel)
-                    .addComponent(deleteEventButton))
-                .addGap(27, 27, 27))
-        );
-
-        tabbedPane.addTab("General", generalTab);
 
         
         //Forecast Tab
@@ -262,15 +159,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         zipcodeLabel.setText("Enter Zip Code: (US Only)");
         weatherDataButton.setText("Get Weather");
         weatherDataButton.addActionListener(this);
-        
-        //Calendar Settings
-        calendarSettingsLabel.setText("Calendar Settings");
-        warningLabel1.setText("*** Hitting Upload will require google");
-        warningLabel2.setText("   account to get Calendar info ***");
-        uploadCalendarLabel.setText("Upload a Google Calendar:");
-        uploadCalendarButton.setText("Upload");
-        uploadCalendarButton.addActionListener(this);
-        
+
         //Other Settings
         otherSettingsLabel.setText("Other Settings");
         refreshLabel.setText("Change Refresh Rate (Minutes)");
@@ -286,16 +175,9 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(weatherCityField))
-                    .addComponent(settingSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(settingSeparator1)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addGap(28, 28, 28)
-                                .addComponent(warningLabel2))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(warningLabel1))
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addGap(28, 28, 28)
                                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -314,12 +196,6 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                                                 .addComponent(getWeatherLabel)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(weatherDataButton))))))
-                            .addComponent(calendarSettingsLabel)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(uploadCalendarLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(uploadCalendarButton))
                             .addComponent(otherSettingsLabel)
                             .addGroup(jPanel5Layout.createSequentialGroup()
                                 .addContainerGap()
@@ -361,18 +237,6 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(settingSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(calendarSettingsLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(warningLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(warningLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(uploadCalendarLabel)
-                    .addComponent(uploadCalendarButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(settingSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(otherSettingsLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(refreshLabel)
@@ -383,7 +247,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                 .addContainerGap())
         );
 
-        tabbedPane.addTab("Settings", settingTab);
+        tabbedPane.addTab("Setup", settingTab);
 
         javax.swing.GroupLayout tabContainerLayout = new javax.swing.GroupLayout(tabContainer);
         tabContainer.setLayout(tabContainerLayout);
@@ -535,29 +399,6 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        /*try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GuiUserInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GuiUserInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GuiUserInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GuiUserInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }*/
-        //</editor-fold>
-
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
