@@ -12,8 +12,6 @@ package ics414;
 
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
-import javax.swing.tree.ExpandVetoException;
-import java.awt.TextArea;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,11 +47,12 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     
     // Settings Pane
     private JSeparator settingSeparator1;
-    private JButton weatherDataButton, saveSettingsButton;
+    private JButton weatherDataButton, weatherCityButton,saveSettingsButton;
     private JLabel settingLabel, weatherSettingsLabel, otherSettingsLabel, enterCityLabel,
     	refreshLabel, zipcodeLabel, weatherORLabel, getWeatherLabel;
     private JTextField weatherCityField, zipcodeField;
     private JComboBox<Integer> refreshBox;
+    private boolean hasForecastPane = false;
     
     private JMenuItem menuItem;
     
@@ -110,6 +109,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         refreshLabel = new JLabel();
         weatherCityField = new JTextField();
         weatherDataButton = new JButton();
+        weatherCityButton = new JButton();
         zipcodeLabel = new JLabel();
         weatherORLabel = new JLabel();
         zipcodeField = new JTextField();
@@ -134,30 +134,15 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        
-        //Forecast Tab
-        /*javax.swing.GroupLayout forecastTabLayout = new javax.swing.GroupLayout(forecastTab);
-        forecastTab.setLayout(forecastTabLayout);
-        forecastTabLayout.setHorizontalGroup(
-        forecastTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 281, Short.MAX_VALUE)
-         );
-        forecastTabLayout.setVerticalGroup(
-        forecastTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 440, Short.MAX_VALUE)
-         );
-        
-
-        tabbedPane.addTab("Forecast", forecastTab);*/
         
         //Weather Settings
         weatherSettingsLabel.setText("Weather Settings");
-        enterCityLabel.setText("Enter City for Weather");
+        enterCityLabel.setText("Enter City for Weather (No Spaces): ");
         getWeatherLabel.setText("Get Weather Data: ");
-        weatherORLabel.setText("OR");
+        weatherORLabel.setText("Get Weather Data: ");
         zipcodeLabel.setText("Enter Zip Code: (US Only)");
-        weatherDataButton.setText("Get Weather");
+        weatherCityButton.setText("Using City");
+        weatherDataButton.setText("Using Zipcode");
         weatherDataButton.addActionListener(this);
 
         //Other Settings
@@ -166,56 +151,60 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         saveSettingsButton.setText("Save Settings");
         saveSettingsButton.addActionListener(this);
 
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(settingTab);
-        settingTab.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
+        /*.swing.GroupLayout settingTabLayout = new javax.swing.GroupLayout(settingTab);
+        settingTab.setLayout(settingTabLayout);
+        settingTabLayout.setHorizontalGroup(
+            settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingTabLayout.createSequentialGroup()
+                .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(settingTabLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addComponent(weatherCityField))
+                    .addGap(13, 13, 13)
+                    .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(weatherORLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(weatherCityButton))
                     .addComponent(settingSeparator1)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addGroup(settingTabLayout.createSequentialGroup()
+                        .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(settingTabLayout.createSequentialGroup()
                                 .addGap(28, 28, 28)
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 	.addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(weatherORLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addGroup(settingTabLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(weatherSettingsLabel)
-                                    .addGroup(jPanel5Layout.createSequentialGroup()
+                                    .addGroup(settingTabLayout.createSequentialGroup()
                                         .addGap(6, 6, 6)
-                                        .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         	.addComponent(zipcodeLabel)
                                         	.addComponent(enterCityLabel)
-                                            .addGroup(jPanel5Layout.createSequentialGroup()
+                                            .addGroup(settingTabLayout.createSequentialGroup()
                                                 .addComponent(getWeatherLabel)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                                 .addComponent(weatherDataButton))))))
                             .addComponent(otherSettingsLabel)
-                            .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addGroup(settingTabLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(refreshLabel))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addGroup(settingTabLayout.createSequentialGroup()
                             		.addContainerGap()
                             		.addComponent(refreshBox))
-                            .addGroup(jPanel5Layout.createSequentialGroup()
+                            .addGroup(settingTabLayout.createSequentialGroup()
                                 .addGap(151, 151, 151)
                                 .addComponent(settingLabel)))
                         .addGap(0, 76, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel5Layout.createSequentialGroup()
+            .addGroup(settingTabLayout.createSequentialGroup()
                 .addGap(90, 90, 90)
                 .addComponent(saveSettingsButton)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
+        settingTabLayout.setVerticalGroup(
+            settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingTabLayout.createSequentialGroup()
                 .addGap(7, 7, 7)
                 .addComponent(settingLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -231,7 +220,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(getWeatherLabel)
                     .addComponent(weatherDataButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -247,7 +236,90 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                 .addContainerGap())
         );
 
-        tabbedPane.addTab("Setup", settingTab);
+        tabbedPane.addTab("Setup", settingTab);*/
+        
+        javax.swing.GroupLayout settingTabLayout = new javax.swing.GroupLayout(settingTab);
+        settingTab.setLayout(settingTabLayout);
+        settingTabLayout.setHorizontalGroup(
+            settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingTabLayout.createSequentialGroup()
+                .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(settingSeparator1)
+                    .addGroup(settingTabLayout.createSequentialGroup()
+                        .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(settingTabLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(weatherSettingsLabel)
+                                    .addGroup(settingTabLayout.createSequentialGroup()
+                                        .addGap(6, 6, 6)
+                                        .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(zipcodeLabel)
+                                            .addComponent(enterCityLabel)
+                                            .addGroup(settingTabLayout.createSequentialGroup()
+                                                .addComponent(getWeatherLabel)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(weatherDataButton))
+                                            .addComponent(weatherCityField, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addGroup(settingTabLayout.createSequentialGroup()
+                                .addGap(151, 151, 151)
+                                .addComponent(settingLabel))
+                            .addGroup(settingTabLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(weatherORLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(weatherCityButton)))
+                        .addGap(0, 5, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(settingTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(settingTabLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(refreshLabel))
+                    .addGroup(settingTabLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(refreshBox))
+                    .addComponent(otherSettingsLabel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        settingTabLayout.setVerticalGroup(
+            settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(settingTabLayout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(settingLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(weatherSettingsLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(enterCityLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(weatherCityField, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
+                .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(weatherORLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(weatherCityButton))
+                .addGap(18, 18, 18)
+                .addComponent(zipcodeLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(zipcodeField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(settingTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(getWeatherLabel)
+                    .addComponent(weatherDataButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(settingSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(otherSettingsLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(refreshLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(refreshBox)
+                .addContainerGap(271, Short.MAX_VALUE))
+        );
+
+        tabbedPane.addTab("Settings", settingTab);
 
         javax.swing.GroupLayout tabContainerLayout = new javax.swing.GroupLayout(tabContainer);
         tabContainer.setLayout(tabContainerLayout);
@@ -414,49 +486,52 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 		if (source == weatherDataButton) {
 			if ( !(weatherCityField.getText().equals("") && zipcodeField.getText().equals("")) ) {
 				if (! (weatherCityField.getText().equals(""))) {
-					try{
-						locWeatherURL = startURL + "q=" + weatherCityField.getText() + endURL;
-						//System.out.println(locWeatherURL);
-						usrWeatherData = new ProcessUrl(locWeatherURL);
-						
-						hasWeatherForCity = true;
-						location = weatherCityField.getText();
-						temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
-						humidity = usrWeatherData.getWeatherHumidity();
-						
-						createForecastTab();
-						//Start the refreshing of ambient part of the User Interface
-						int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
-						
-				        refreshInMinutes *= Integer.parseInt(refreshBox.getSelectedItem().toString());
-				        
-				        Timer refreshTimer = new Timer();
-				        refreshTimer.scheduleAtFixedRate(new TimerTask(){
-				        	public void run() {
-				        		try{
-				        			usrWeatherData = new ProcessUrl(locWeatherURL);
-				        			usrWeatherData.showWeatherIcon();
-				        			location = weatherCityField.getText();
-									temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
-									humidity = usrWeatherData.getWeatherHumidity();
-				        			updateForecastTab();
-				        		} catch (Exception e){
-				        			e.printStackTrace();
-				        			System.err.println("Error with Timer");
-				        			JOptionPane.showMessageDialog(null,
-				        					"Error with refresh timer",
-				        					"alert",
-				        					JOptionPane.ERROR_MESSAGE);
-				        		}
-				        	}
-				        }, 0, refreshInMinutes);
-				    
-					} catch(Exception e) {
-						e.printStackTrace();
-						JOptionPane.showMessageDialog(null,
-								"Problem processing Weather URL",
-								"alert",
-								JOptionPane.ERROR_MESSAGE);
+					if(hasForecastPane) {
+						//Forecast Pane up
+						updateForecastTab();
+					} else {
+						//Forecast Pane not up
+						try {
+							locWeatherURL = startURL + "q=" + weatherCityField.getText() + endURL;
+							//System.out.println(locWeatherURL);
+							usrWeatherData = new ProcessUrl(locWeatherURL);		
+							hasWeatherForCity = true;
+							location = weatherCityField.getText();
+							temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
+							humidity = usrWeatherData.getWeatherHumidity();		
+							createForecastTab();
+							//Start the refreshing of ambient part of the User Interface
+							int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
+							
+						    refreshInMinutes *= Integer.parseInt(refreshBox.getSelectedItem().toString());
+						        
+						    Timer refreshTimer = new Timer();
+						    refreshTimer.scheduleAtFixedRate(new TimerTask(){
+						        public void run() {
+						       		try{
+						      			usrWeatherData = new ProcessUrl(locWeatherURL);
+						       			usrWeatherData.showWeatherIcon();
+						       			location = weatherCityField.getText();
+										temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
+										humidity = usrWeatherData.getWeatherHumidity();
+					        			updateForecastTab();
+					        		} catch (Exception e){
+					        			e.printStackTrace();
+					        			System.err.println("Error with Timer");
+					        			JOptionPane.showMessageDialog(null,
+						        					"Error with refresh timer",
+						        					"alert",
+						        					JOptionPane.ERROR_MESSAGE);
+						        	}
+						        }
+						    }, 0, refreshInMinutes);
+						} catch(Exception e) {
+							e.printStackTrace();
+							JOptionPane.showMessageDialog(null,
+									"Problem processing Weather URL",
+									"alert",
+									JOptionPane.ERROR_MESSAGE);
+						}
 					}
 				} else {
 					try{
