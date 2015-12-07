@@ -35,7 +35,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 	private JMenuBar topMenuBar;
     private JMenu topMenu1, topMenu2;
     //Tabs in the Interface
-    private JPanel tabContainer, forecastTab, settingTab;
+    private JPanel tabContainer, forecastTab, settingTab, legendTab;
     private JTabbedPane tabbedPane;
     
     //Forecast Pane
@@ -44,6 +44,11 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     private JLabel humidityValue, temperatureValue;
     private boolean hasWeatherForCity = false;
     
+    //Legend Pane
+    private JLabel weatherIconLegendLabel, forecastDescriptionLabel, dayLabel, nightLabel, clearSkiesLabel, fewCloudsLabel, scatteredLabel,
+    	brokenCloudLabel, showerLabel, rainLabel, thunderLabel, snowLabel, mistLabel, clearSkiesNightIcon, clearSkiesDayIcon,
+    	fewCloudsDayIcon, fewCloudsNightIcon, scatteredDayIcon, scatteredNightIcon, brokenCloudsDayIcon, brokenCloudsNightIcon, showerDayIcon, showerNightIcon,
+    	rainDayIcon, rainNightIcon, thunderDayIcon, thunderNightIcon, snowDayIcon, snowNightIcon, mistDayIcon, mistNightIcon;
     
     // Settings Pane
     private JSeparator settingSeparator1;
@@ -53,6 +58,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     private JTextField weatherCityField, zipcodeField;
     private JComboBox<Integer> refreshBox;
     private boolean hasForecastPane = false;
+    private boolean hasLegendPane = false;
     
     private JMenuItem menuItem;
     
@@ -75,6 +81,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     	
     	return answer;
     }
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -89,6 +96,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         tabbedPane = new JTabbedPane();
         forecastTab = new JPanel();
         settingTab = new JPanel();
+        legendTab = new JPanel();
         
         //Initializing Menu Bar + menu Items
         topMenuBar = new JMenuBar();
@@ -381,6 +389,179 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     	}
     	
     }
+    
+    private void createForecastLegend() {
+    	weatherIconLegendLabel = new JLabel();
+    	forecastDescriptionLabel = new JLabel();
+    	dayLabel = new JLabel();
+    	nightLabel = new JLabel();
+    	clearSkiesLabel = new JLabel();
+    	fewCloudsLabel = new JLabel();
+    	scatteredLabel = new JLabel();
+    	brokenCloudLabel = new JLabel();
+    	showerLabel = new JLabel();
+    	rainLabel = new JLabel();
+    	thunderLabel = new JLabel();
+    	snowLabel = new JLabel();
+    	mistLabel = new JLabel();
+    	try {
+    		clearSkiesNightIcon = new JLabel(usrWeatherData.getLegendIcon("01n"));
+        	clearSkiesDayIcon = new JLabel(usrWeatherData.getLegendIcon("01d"));
+        	fewCloudsDayIcon = new JLabel(usrWeatherData.getLegendIcon("02d"));
+        	fewCloudsNightIcon = new JLabel(usrWeatherData.getLegendIcon("02n"));
+        	scatteredDayIcon = new JLabel(usrWeatherData.getLegendIcon("03d"));
+        	scatteredNightIcon = new JLabel(usrWeatherData.getLegendIcon("03n"));
+        	brokenCloudsDayIcon = new JLabel(usrWeatherData.getLegendIcon("04d"));
+        	brokenCloudsNightIcon = new JLabel(usrWeatherData.getLegendIcon("04n"));
+        	showerDayIcon = new JLabel(usrWeatherData.getLegendIcon("09d"));
+        	showerNightIcon = new JLabel(usrWeatherData.getLegendIcon("09n"));
+        	rainDayIcon = new JLabel(usrWeatherData.getLegendIcon("10d"));
+        	rainNightIcon = new JLabel(usrWeatherData.getLegendIcon("10n"));
+        	thunderDayIcon = new JLabel(usrWeatherData.getLegendIcon("11d"));
+        	thunderNightIcon = new JLabel(usrWeatherData.getLegendIcon("11n"));
+        	snowDayIcon = new JLabel(usrWeatherData.getLegendIcon("13d"));
+        	snowNightIcon = new JLabel(usrWeatherData.getLegendIcon("13n"));
+        	mistDayIcon = new JLabel(usrWeatherData.getLegendIcon("50d"));
+        	mistNightIcon = new JLabel(usrWeatherData.getLegendIcon("50n"));
+    	} catch(Exception e) {
+    		e.printStackTrace();;
+    	}
+    	
+    	weatherIconLegendLabel.setText("Weather Icon Legend");
+        forecastDescriptionLabel.setText("Forecast Description");
+        dayLabel.setText("Day");
+        nightLabel.setText("Night");
+        clearSkiesLabel.setText("Clear Skies");
+        fewCloudsLabel.setText("Few Clouds");
+        scatteredLabel.setText("Scattered Clouds");
+        brokenCloudLabel.setText("Broken Clouds");
+        showerLabel.setText("Shower Rain");
+        rainLabel.setText("Rain");
+        thunderLabel.setText("Thunderstorm");
+        snowLabel.setText("Snow");
+        mistLabel.setText("Mist");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(legendTab);
+        legendTab.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(forecastDescriptionLabel)
+                        .addGap(30, 30, 30)
+                        .addComponent(dayLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(nightLabel))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(mistLabel)
+                                    .addComponent(snowLabel)
+                                    .addComponent(thunderLabel)
+                                    .addComponent(rainLabel)
+                                    .addComponent(showerLabel)
+                                    .addComponent(brokenCloudLabel)
+                                    .addComponent(scatteredLabel)
+                                    .addComponent(fewCloudsLabel))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fewCloudsDayIcon)
+                                    .addComponent(scatteredDayIcon)
+                                    .addComponent(brokenCloudsDayIcon)
+                                    .addComponent(showerDayIcon)
+                                    .addComponent(rainDayIcon)
+                                    .addComponent(thunderDayIcon)
+                                    .addComponent(snowDayIcon)
+                                    .addComponent(mistDayIcon)))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addComponent(clearSkiesLabel)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(clearSkiesDayIcon)))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addComponent(clearSkiesNightIcon))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(fewCloudsNightIcon, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(scatteredNightIcon, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(brokenCloudsNightIcon, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(showerNightIcon, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(rainNightIcon, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(thunderNightIcon, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(snowNightIcon, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(mistNightIcon, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .addGap(74, 74, 74)
+                        .addComponent(weatherIconLegendLabel)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(weatherIconLegendLabel)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(forecastDescriptionLabel)
+                    .addComponent(dayLabel)
+                    .addComponent(nightLabel))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(clearSkiesLabel)
+                    .addComponent(clearSkiesNightIcon)
+                    .addComponent(clearSkiesDayIcon))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(fewCloudsLabel)
+                    .addComponent(fewCloudsDayIcon)
+                    .addComponent(fewCloudsNightIcon))
+                .addGap(36, 36, 36)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(scatteredLabel)
+                    .addComponent(scatteredDayIcon)
+                    .addComponent(scatteredNightIcon))
+                .addGap(37, 37, 37)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(brokenCloudLabel)
+                    .addComponent(brokenCloudsDayIcon)
+                    .addComponent(brokenCloudsNightIcon))
+                .addGap(38, 38, 38)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(showerLabel)
+                    .addComponent(showerDayIcon)
+                    .addComponent(showerNightIcon))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rainLabel)
+                    .addComponent(rainDayIcon)
+                    .addComponent(rainNightIcon))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(thunderLabel)
+                    .addComponent(thunderDayIcon)
+                    .addComponent(thunderNightIcon))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(snowLabel)
+                    .addComponent(snowDayIcon)
+                    .addComponent(snowNightIcon))
+                .addGap(42, 42, 42)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mistLabel)
+                    .addComponent(mistDayIcon)
+                    .addComponent(mistNightIcon))
+                .addContainerGap(56, Short.MAX_VALUE))
+        );
+
+        tabbedPane.addTab("Forecast Legend", legendTab);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -411,7 +592,9 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 						hasWeatherForCity = true;
 						location = weatherCityField.getText();
 						temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
-						humidity = usrWeatherData.getWeatherHumidity();		
+						humidity = usrWeatherData.getWeatherHumidity();
+						
+						createForecastLegend();
 						createForecastTab();
 						//Start the refreshing of ambient part of the User Interface
 						int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute

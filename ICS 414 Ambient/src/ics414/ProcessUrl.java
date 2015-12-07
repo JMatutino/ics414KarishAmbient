@@ -86,6 +86,12 @@ public class ProcessUrl {
         return new ImageIcon(img);
     }
     
+    public ImageIcon getLegendIcon(String imgNum) throws IOException {
+    	URL url = new URL("http://openweathermap.org/img/w/" + imgNum + ".png");
+    	BufferedImage img = ImageIO.read(url);
+    	return new ImageIcon(img);
+    }
+    
     public void showWeatherIcon() throws IOException {
     	JFrame frame = new JFrame("Transparent Window");
         frame.setUndecorated(true);
