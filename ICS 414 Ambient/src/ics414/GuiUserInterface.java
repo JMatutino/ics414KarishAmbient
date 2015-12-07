@@ -391,7 +391,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     }
     
     private void createForecastLegend() {
-        weatherIconLegendLabel = new JLabel();
+      weatherIconLegendLabel = new JLabel();
     	forecastDescriptionLabel = new JLabel();
     	dayLabel = new JLabel();
     	nightLabel = new JLabel();
@@ -625,8 +625,10 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         location = weatherCityField.getText();
         temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
         humidity = usrWeatherData.getWeatherHumidity();
-
-        createForecastLegend();
+        if(!hasLegendPane){
+          createForecastLegend();
+          hasLegendPane = true;
+        }
         createForecastTab();
         //Start the refreshing of ambient part of the User Interface
         int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
