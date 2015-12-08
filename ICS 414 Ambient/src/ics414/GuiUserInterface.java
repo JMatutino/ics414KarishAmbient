@@ -59,6 +59,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     private JComboBox<Integer> refreshBox;
     private boolean hasForecastPane = false;
     private boolean hasLegendPane = false;
+    private boolean firstRun = true;
     
     private JMenuItem menuItem;
     
@@ -314,8 +315,13 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
             	String sTemp = temperature.toString();
             	sTemp = sTemp.substring(0, 4);
             	temperatureValue.setText(sTemp);
-            	weatherImage = new JLabel(usrWeatherData.getWeatherIcon());
-
+            	if(firstRun){
+            	  firstRun = false;
+            	}
+            	else {
+            	  forecastTab.remove(weatherImage);
+            	}
+            	  weatherImage = new JLabel(usrWeatherData.getWeatherIcon());
                 javax.swing.GroupLayout forecastTabLayout = new javax.swing.GroupLayout(forecastTab);
                 forecastTab.setLayout(forecastTabLayout);
                 forecastTabLayout.setHorizontalGroup(
@@ -363,19 +369,19 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                         .addGap(27, 27, 27)
                         .addContainerGap(234, Short.MAX_VALUE))
                 );
-                
                 tabbedPane.addTab("Forecast", forecastTab);
+
     		} catch (IOException e) {
     			e.printStackTrace();
     		}
         	
 
-            
+    		
         } 
     }
     
     private void updateForecastTab() {
-    	try {
+    	/*try {
     		currentWeatherLabel.setText("Current Forecast for " + location + ":" );
         	humidityValue.setText(humidity);
         	
@@ -384,9 +390,11 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
         	temperatureValue.setText(sTemp);
         	weatherImage = new JLabel(usrWeatherData.getWeatherIcon());
         	
+        	
+        	
     	} catch (IOException e) {
     		e.printStackTrace();
-    	}
+    	}*/
     	
     }
     
@@ -630,6 +638,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
           hasLegendPane = true;
         }
         createForecastTab();
+        
         //Start the refreshing of ambient part of the User Interface
         int refreshInMinutes = 60000; // 60000 milliseconds == 1 minute
 
