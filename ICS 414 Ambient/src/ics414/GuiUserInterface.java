@@ -585,11 +585,13 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 		if (source == weatherCityButton) {
 			if(hasForecastPane) {
 				//Forecast Pane up
+				
 				updateForecastTab();
 			} else {
 				//Forecast Pane not up
 				if (!(weatherCityField.getText().equals(""))){
 					try {
+						location = weatherCityField.getText();
 						locWeatherURL = startURL + "q=" + weatherCityField.getText() + endURL;
                         processData(locWeatherURL);
 					} catch(Exception e) {
@@ -609,6 +611,7 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
 			} else {
 				if (!(zipcodeField.getText().equals("") )) {
 					try{
+						location = zipcodeField.getText();
 						locWeatherURL = startURL + "zip=" + zipcodeField.getText() + ",us" + endURL;
                         processData(locWeatherURL);
 					} catch(Exception e) {
@@ -626,7 +629,6 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
     private void processData(String usrUrl) throws Exception {
         usrWeatherData = new ProcessUrl(usrUrl);
         hasWeatherForCity = true;
-        location = weatherCityField.getText();
         temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
         humidity = usrWeatherData.getWeatherHumidity();
 <<<<<<< HEAD
@@ -656,7 +658,6 @@ public class GuiUserInterface extends javax.swing.JFrame implements ActionListen
                 try{
                     usrWeatherData = new ProcessUrl(locWeatherURL);
                     usrWeatherData.showWeatherIcon();
-                    location = weatherCityField.getText();
                     temperature = toFarenheit(usrWeatherData.getWeatherTemperature());
                     humidity = usrWeatherData.getWeatherHumidity();
                     updateForecastTab();
